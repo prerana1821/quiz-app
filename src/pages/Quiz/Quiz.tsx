@@ -5,11 +5,11 @@ import "./Quiz.css";
 
 export const Quiz = () => {
   const { quizId } = useParams();
-  const { quizState } = useQuiz();
+  const { allQuizes } = useQuiz();
   const [quizQuestion, setQuizQuestion] = useState(1);
   const [score, setScore] = useState(0);
   const [setColor, setSetColor] = useState(false);
-  const quiz = quizState.find((quiz) => quiz.id === quizId);
+  const quiz = allQuizes.find((quiz) => quiz.id === quizId);
   const getCurrentQuestion = (quiz, currentQuestion) => {
     return quiz.questions[currentQuestion - 1];
   };

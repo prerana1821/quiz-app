@@ -1,17 +1,13 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useState } from "react";
 import { quizes, Quiz } from "../database";
 
 export const QuizContext = createContext<Quiz[] | null>(null);
 
-export const quizReducer = () => {};
-
 export const QuizProvider = ({ children }) => {
-  const initialQuizState: Quiz[] = quizes;
-
-  const [quizState, quizDispatch] = useReducer(quizReducer, initialQuizState);
+  const [allQuizes, setQuiz] = useState<Quiz[] | null>(quizes);
 
   return (
-    <QuizContext.Provider value={{ quizState, quizDispatch }}>
+    <QuizContext.Provider value={{ allQuizes, setQuiz }}>
       {children}
     </QuizContext.Provider>
   );

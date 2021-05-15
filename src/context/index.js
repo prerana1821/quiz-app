@@ -1,6 +1,1 @@
-export {
-  QuizContext,
-  QuizProvider,
-  quizReducer,
-  useQuiz,
-} from "./QuizProvider";
+export { QuizContext, QuizProvider, useQuiz } from "./QuizProvider";
