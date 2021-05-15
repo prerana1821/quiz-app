@@ -3,7 +3,7 @@ import { quizes, Quiz } from "../database";
 
 export const QuizContext = createContext<Quiz[] | null>(null);
 
-export const quizReducer = () => { };
+export const quizReducer = () => {};
 
 export const QuizProvider = ({ children }) => {
   const initialQuizState: Quiz[] = quizes;
@@ -11,7 +11,9 @@ export const QuizProvider = ({ children }) => {
   const [quizState, quizDispatch] = useReducer(quizReducer, initialQuizState);
 
   return (
-    <QuizContext.Provider value={{ quizState, quizDispatch }}>{children}</QuizContext.Provider>
+    <QuizContext.Provider value={{ quizState, quizDispatch }}>
+      {children}
+    </QuizContext.Provider>
   );
 };
 

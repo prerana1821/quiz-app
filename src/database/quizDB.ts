@@ -12,7 +12,7 @@ export const quizes: Quiz[] = [
             {
                 text: 'Which stroke is the only style in which swimmers are face-up in the water?',
                 points: 5,
-                negavtivePoints: 2,
+                negativePoints: 2,
                 options: [
                     {
                         text: 'Backstroke',
@@ -31,7 +31,7 @@ export const quizes: Quiz[] = [
             {
                 text: 'What stroke is a swimming stroke in which the arms are thrown forward together out of the water while the feet kick up and down?',
                 points: 5,
-                negavtivePoints: 2,
+                negativePoints: 2,
                 options: [
                     {
                         text: 'Backstroke',
@@ -50,7 +50,7 @@ export const quizes: Quiz[] = [
             {
                 text: 'What stroke is swiming faced down and extend the arms forward and outward while frog kicking?',
                 points: 5,
-                negavtivePoints: 2,
+                negativePoints: 2,
                 options: [
                     {
                         text: 'Breaststroke',
@@ -78,7 +78,7 @@ export const quizes: Quiz[] = [
             {
                 text: 'In 2015, at the age of 10, who became the youngest competitive swimmer in World Championships history?',
                 points: 5,
-                negavtivePoints: 2,
+                negativePoints: 2,
                 options: [
                     {
                         text: 'Alzain Tareq',
@@ -97,7 +97,7 @@ export const quizes: Quiz[] = [
             {
                 text: 'Who was named the male FINA Swimmer of the Year three times from 2010 to 2017?',
                 points: 5,
-                negavtivePoints: 2,
+                negativePoints: 2,
                 options: [
                     {
                         text: 'Alzain Tareq',
@@ -116,7 +116,7 @@ export const quizes: Quiz[] = [
             {
                 text: 'Which Australian water polo player was inducted into the International Swimming Hall of Fame in 2017?',
                 points: 5,
-                negavtivePoints: 2,
+                negativePoints: 2,
                 options: [
                     {
                         text: 'Rick Carey',

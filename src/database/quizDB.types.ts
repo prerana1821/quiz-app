@@ -5,7 +5,7 @@ export type Options = {
 export type Questions = {
     text: string;
     points: number;
-    negavtivePoints?: number;
+    negativePoints?: number;
     options: Options[]
 }
 
