@@ -1,15 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useQuiz } from "../../context";
 
 export const Result = () => {
-  const { state } = useLocation();
+  const { score, currentQuiz } = useQuiz();
 
-  console.log({ state });
-
-  //   const totalScore = state?.quiz.questions.reduce((acc, value) => {
-  //     return acc + value.points;
-  //   }, 0);
+  const totalScore = currentQuiz.questions.reduce((acc, value) => {
+    return acc + value.points;
+  }, 0);
 
   return (
     <div>
@@ -18,11 +16,13 @@ export const Result = () => {
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt, illum.
       </p>
       <h3>Your Score</h3>
-      {/* <p>{state?.score} / {totalScore}</p> */}
+      <p>
+        {score} / {totalScore}
+      </p>
       <h3>Eanred Coins</h3>
       <p>500</p>
       <Link to='/quizes'>
-        <button>Take New Quiz</button>
+        <button className='btn pink'>Take New Quiz</button>
       </Link>
     </div>
   );
