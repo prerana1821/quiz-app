@@ -1,9 +1,17 @@
-import React from 'react'
+import React from "react";
+import "./Header.css";
 
 export const Header = () => {
-    return (
-        <div>
-            <h1>Quiz App</h1>
-        </div>
-    )
-}
+  return (
+    <div>
+      <div className='logo my-4'>
+        <img
+          src='https://prekit.netlify.app/images/preCodes.png'
+          className='logo-img'
+          alt='Logo'
+        />
+        <p className='logo-txt text-3xl'>Quiz App</p>
+      </div>
+    </div>
+  );
+};

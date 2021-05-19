@@ -1,50 +1,51 @@
 import { useParams } from "react-router";
 import { useQuiz } from "../../context";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./Quiz.css";
 
 export const Quiz = () => {
   const { quizId } = useParams();
   const { allQuizes } = useQuiz();
-  const [quizQuestion, setQuizQuestion] = useState(1);
-  const [score, setScore] = useState(0);
-  const [setColor, setSetColor] = useState(false);
+  const [quizQuestion, setQuizQuestion] = useState<number>(1);
+  const [score, setScore] = useState<number>(0);
+  const [color, setColor] = useState<boolean>(false);
+  const [seconds, setSeconds] = useState<number | string>(10);
   const quiz = allQuizes.find((quiz) => quiz.id === quizId);
   const getCurrentQuestion = (quiz, currentQuestion) => {
     return quiz.questions[currentQuestion - 1];
   };
   const question = getCurrentQuestion(quiz, quizQuestion);
-  console.log(question);
 
   const getScore = (answer, question, score) => {
     if (answer.isCorrect) {
       setSeconds("Great Job");
-      setSetColor(true);
+      setColor(true);
       setScore(score + question.points);
     } else {
       setSeconds("Oopps!");
-      setSetColor(true);
+      setColor(true);
       setScore(score - question.negativePoints);
     }
   };
 
-  const [seconds, setSeconds] = useState(10);
-
   useEffect(() => {
-    console.log(score);
-    console.log(question.negativePoints);
-    if (setColor) {
+    let quizCounter;
+    if (color) {
       setSeconds("Great Job");
     } else {
       if (seconds > 0) {
-        setTimeout(() => setSeconds(seconds - 1), 1000);
+        quizCounter = setTimeout(() => setSeconds(seconds - 1), 1000);
       } else {
-        setSetColor(true);
+        setColor(true);
         setScore(score - question.negativePoints);
         setSeconds("Sorry! Try next time");
       }
     }
-  }, [seconds, setColor]);
+    return () => {
+      clearTimeout(quizCounter);
+    };
+  }, [seconds, color]);
 
   return (
     <div className='p-6 flex flex-col justify-between height'>
@@ -61,8 +62,9 @@ export const Quiz = () => {
               return (
                 <button
                   key={answer.text}
+                  disabled={color}
                   className={
-                    setColor ? (answer.isCorrect ? "btn green" : "btn") : "btn"
+                    color ? (answer.isCorrect ? "btn green" : "btn") : "btn"
                   }
                   onClick={() => getScore(answer, question, score)}
                 >
@@ -74,14 +76,18 @@ export const Quiz = () => {
         </div>
       </div>
       <div className='flex justify-between'>
-        <button className='btn'>Quit Quiz</button>
+        <Link to='/quizes'>
+          <button className='btn'>Quit Quiz</button>
+        </Link>
         {quizQuestion > quiz.questions.length - 1 ? (
-          <button className='btn'>Stop</button>
+          <Link to='/result' state={{ score, quiz }}>
+            <button className='btn'>Stop</button>
+          </Link>
         ) : (
           <button
             className='btn'
             onClick={() => {
-              setSetColor(false);
+              setColor(false);
               setSeconds(10);
               setQuizQuestion(() => quizQuestion + 1);
             }}
