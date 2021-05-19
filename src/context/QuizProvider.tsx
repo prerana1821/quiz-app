@@ -21,18 +21,26 @@ export const initialQuizState: InitialQuizState = {
   currentQuiz: null,
 };
 
-export const getScore = (state, action) => {
+export const getScore = (state: typeof initialQuizState, action): number => {
   if (action.payload.answer.isCorrect) {
-    return (
-      state.currentQuiz.questions[action.payload.currentQuestionNo].points +
-      state.score
-    );
+    if (state.currentQuiz !== null) {
+      return (
+        state.currentQuiz.questions[action.payload.currentQuestionNo].points +
+        state.score
+      );
+    } else {
+      return state.score;
+    }
   } else {
-    return (
-      state.score -
-      state.currentQuiz.questions[action.payload.currentQuestionNo]
-        .negativePoints
-    );
+    if (state.currentQuiz !== null) {
+      const question =
+        state.currentQuiz.questions[action.payload.currentQuestionNo];
+      return question.negativePoints
+        ? state.score - question.negativePoints
+        : 0;
+    } else {
+      return state.score;
+    }
   }
 };
 
@@ -72,18 +80,6 @@ export const quizReducer = (
         showAnswer: true,
         seconds: "Good Job",
       };
-    // case "SET_SCORE":
-    //   return {
-    //     ...state,
-    //     score: action.payload.answer.isCorrect
-    //       ? state.currentQuiz.questions[action.payload.currentQuestionNo]
-    //           .points + state.score
-    //       : state.score -
-    //         state.currentQuiz.questions[action.payload.currentQuestionNo]
-    //           .negativePoints,
-    //     showAnswer: true,
-    //     seconds: "Good Job",
-    //   };
     case "SET_SECONDS":
       return {
         ...state,
@@ -124,3 +120,16 @@ export const QuizProvider = ({ children }) => {
 export const useQuiz = () => {
   return useContext<Quiz[] | null>(QuizContext);
 };
+
+// case "SET_SCORE":
+//   return {
+//     ...state,
+//     score: action.payload.answer.isCorrect
+//       ? state.currentQuiz.questions[action.payload.currentQuestionNo]
+//           .points + state.score
+//       : state.score -
+//         state.currentQuiz.questions[action.payload.currentQuestionNo]
+//           .negativePoints,
+//     showAnswer: true,
+//     seconds: "Good Job",
+//   };
