@@ -1,22 +1,27 @@
 import { createContext, useContext, useReducer } from "react";
-import { quizzesDB, Quiz, Options } from "../database";
+import { quizzesDB, Quiz, Options, categoriesDB } from "../database";
+import { Category } from "../database/quizDB.types";
 
 export const QuizContext = createContext<Quiz[] | null>(null);
 
 export type InitialQuizState = {
   quizzes: Quiz[];
+  categories: Category[];
   currentQuestionNo: number;
   score: number;
   seconds: number;
   showAnswer: boolean;
+  viewByCategory: string;
   currentQuiz: null | Quiz;
 };
 
 export const initialQuizState: InitialQuizState = {
   quizzes: quizzesDB,
+  categories: categoriesDB,
   currentQuestionNo: 0,
   score: 0,
   seconds: 10,
+  viewByCategory: "",
   showAnswer: false,
   currentQuiz: null,
 };
@@ -52,6 +57,7 @@ type ACTIONTYPE =
       payload: { answer: Options; currentQuestionNo: number; score: number };
     }
   | { type: "SET_SECONDS"; payload: { seconds: number | string } }
+  | { type: "CATEGORY_QUIZZES"; payload: { category: Category } }
   | { type: "QUIT_QUIZ" };
 
 export const quizReducer = (
@@ -65,6 +71,11 @@ export const quizReducer = (
         currentQuiz: state.quizzes.find(
           (quiz) => quiz.id === action.payload.quizId
         ),
+      };
+    case "CATEGORY_QUIZZES":
+      return {
+        ...state,
+        viewByCategory: action.payload.category,
       };
     case "CURRENT_QUESTION":
       return {
@@ -94,17 +105,36 @@ export const quizReducer = (
   }
 };
 
+const getQuizzesByCatgeory = (quizzes, viewByCategory) => {
+  return quizzes.filter((quiz) =>
+    viewByCategory ? quiz.categoryId === viewByCategory.id : quiz
+  );
+};
+
 export const QuizProvider = ({ children }) => {
   const [
-    { quizzes, currentQuestionNo, score, currentQuiz, seconds, showAnswer },
+    {
+      quizzes,
+      categories,
+      currentQuestionNo,
+      viewByCategory,
+      score,
+      currentQuiz,
+      seconds,
+      showAnswer,
+    },
     quizDispatch,
   ] = useReducer(quizReducer, initialQuizState);
+
+  const categoryQuizzes = getQuizzesByCatgeory(quizzes, viewByCategory);
 
   return (
     <QuizContext.Provider
       value={{
         quizzes,
         quizDispatch,
+        categories,
+        categoryQuizzes,
         currentQuiz,
         score,
         seconds,

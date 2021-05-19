@@ -5,9 +5,16 @@ export const quizzesDB: Quiz[] = [
     {
         id: '1',
         quizName: "Swimming Strokes",
-        category: "Strokes",
+        categoryId: "11",
         level: "level 1",
         thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsbSeDQkqki12JMfNZ5BS6yCUNV4__TJxXKw&usqp=CAU",
+        highScore: [
+            {
+                id: "2231",
+                userId: "2222",
+                score: 20
+            }
+        ],
         questions: [
             {
                 text: 'Which stroke is the only style in which swimmers are face-up in the water?',
@@ -71,9 +78,16 @@ export const quizzesDB: Quiz[] = [
     {
         id: v4(),
         quizName: "Championships",
-        category: "People",
+        categoryId: "12",
         level: "level 2",
         thumbnail: "https://i.guim.co.uk/img/media/b339572204f03729bbdd7c34133b4ebfd21e27d1/0_110_5216_3129/master/5216.jpg?width=700&quality=85&auto=format&fit=max&s=ec04b357793f146b7a2c57d80abcbbac",
+        highScore: [
+            {
+                id: "2232",
+                userId: "2222",
+                score: 20
+            }
+        ],
         questions: [
             {
                 text: 'In 2015, at the age of 10, who became the youngest competitive swimmer in World Championships history?',

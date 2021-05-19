@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import { useQuiz } from "../../context";
 
 export const Quizes = () => {
-  const { quizzes, quizDispatch } = useQuiz();
+  const { categoryQuizzes, quizDispatch } = useQuiz();
 
   return (
     <div>
-      {quizzes.map((quiz) => {
+      {categoryQuizzes.map((quiz) => {
         return (
           <div key={quiz.id} className='bg-white shadow-lg rounded-2xl m-4'>
             <img
