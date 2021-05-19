@@ -16,7 +16,7 @@ export const Result = () => {
 
   console.log({ state });
 
-  const totalScore = currentQuiz.questions.reduce((acc, value) => {
+  const totalScore = currentQuiz.questions.reduce((acc, value): number => {
     return acc + value.points;
   }, 0);
 

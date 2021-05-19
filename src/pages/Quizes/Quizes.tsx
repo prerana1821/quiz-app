@@ -5,7 +5,7 @@ import { useQuiz } from "../../context";
 export const Quizes = () => {
   const { categoryQuizzes, categories, quizDispatch } = useQuiz();
 
-  const getCategoryName = (categoryId) => {
+  const getCategoryName = (categoryId: string): string => {
     const cat = categories.find((category) => category.id === categoryId);
     return cat.name;
   };
