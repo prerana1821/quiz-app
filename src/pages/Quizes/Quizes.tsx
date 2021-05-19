@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import { useQuiz } from "../../context";
 
 export const Quizes = () => {
-  const { allQuizes } = useQuiz();
+  const { quizzes, quizDispatch } = useQuiz();
 
   return (
     <div>
-      {allQuizes.map((quiz) => {
+      {quizzes.map((quiz) => {
         return (
           <div key={quiz.id} className='bg-white shadow-lg rounded-2xl m-4'>
             <img
@@ -21,7 +21,15 @@ export const Quizes = () => {
                 <p className='text-xl text-left'>{quiz.category}</p>
               </div>
               <Link to={`/quizes/${quiz.id}`}>
-                <button className='text-white font-bold py-3.5 px-3 rounded-lg text-lg pink'>
+                <button
+                  onClick={() =>
+                    quizDispatch({
+                      type: "SET_QUIZ",
+                      payload: { quizId: quiz.id },
+                    })
+                  }
+                  className='text-white font-bold py-3.5 px-3 rounded-lg text-lg pink'
+                >
                   Start Quiz
                 </button>
               </Link>

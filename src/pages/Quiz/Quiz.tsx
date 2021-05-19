@@ -1,100 +1,105 @@
-import { useParams } from "react-router";
-import { useQuiz } from "../../context";
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useQuiz } from "../../context";
+import { useEffect } from "react";
 import "./Quiz.css";
 
-export const Quiz = () => {
-  const { quizId } = useParams();
-  const { allQuizes } = useQuiz();
-  const [quizQuestion, setQuizQuestion] = useState<number>(1);
-  const [score, setScore] = useState<number>(0);
-  const [color, setColor] = useState<boolean>(false);
-  const [seconds, setSeconds] = useState<number | string>(10);
-  const quiz = allQuizes.find((quiz) => quiz.id === quizId);
-  const getCurrentQuestion = (quiz, currentQuestion) => {
-    return quiz.questions[currentQuestion - 1];
-  };
-  const question = getCurrentQuestion(quiz, quizQuestion);
-
-  const getScore = (answer, question, score) => {
-    if (answer.isCorrect) {
-      setSeconds("Great Job");
-      setColor(true);
-      setScore(score + question.points);
-    } else {
-      setSeconds("Oopps!");
-      setColor(true);
-      setScore(score - question.negativePoints);
-    }
-  };
+export const QuizComp = () => {
+  const {
+    score,
+    currentQuiz,
+    seconds,
+    showAnswer,
+    quizDispatch,
+    currentQuestionNo,
+  } = useQuiz();
 
   useEffect(() => {
     let quizCounter;
-    if (color) {
-      setSeconds("Great Job");
+    if (seconds > 0) {
+      quizCounter = setTimeout(
+        () =>
+          quizDispatch({
+            type: "SET_SECONDS",
+            payload: { seconds: seconds - 1 },
+          }),
+        1000
+      );
     } else {
-      if (seconds > 0) {
-        quizCounter = setTimeout(() => setSeconds(seconds - 1), 1000);
-      } else {
-        setColor(true);
-        setScore(score - question.negativePoints);
-        setSeconds("Sorry! Try next time");
-      }
+      quizDispatch({
+        type: "SET_SECONDS",
+        payload: { seconds: "Time Out" },
+      });
     }
     return () => {
       clearTimeout(quizCounter);
     };
-  }, [seconds, color]);
+  }, [seconds, showAnswer]);
 
   return (
-    <div className='p-6 flex flex-col justify-between height'>
-      <div>
-        <h2 className='text-xl'>Timer: {seconds}</h2>
-        <p className='text-2xl'>
-          Question {quizQuestion}/{quiz.questions.length}
-        </p>
-        <p className='text-xl'>Score: {score}</p>
+    <div>
+      <div className='p-6 flex flex-col justify-between height'>
         <div>
-          <p className='text-3xl'>{question.text}</p>
-          <div className='flex flex-col gap-4 py-4'>
-            {question.options.map((answer) => {
-              return (
-                <button
-                  key={answer.text}
-                  disabled={color}
-                  className={
-                    color ? (answer.isCorrect ? "btn green" : "btn") : "btn"
-                  }
-                  onClick={() => getScore(answer, question, score)}
-                >
-                  {answer.text}
-                </button>
-              );
-            })}
+          <h2 className='text-xl'>Timer: {seconds}</h2>
+          <p className='text-2xl'>
+            Question {currentQuestionNo + 1}/{currentQuiz.questions.length}
+          </p>
+          <p className='text-xl'>Score: {score}</p>
+          <div>
+            <p className='text-3xl'>
+              {currentQuiz.questions[currentQuestionNo].text}
+            </p>
+            <div className='flex flex-col gap-4 py-4'>
+              {currentQuiz.questions[currentQuestionNo].options.map(
+                (answer) => {
+                  return (
+                    <button
+                      key={answer.text}
+                      disabled={showAnswer}
+                      className={
+                        showAnswer
+                          ? answer.isCorrect
+                            ? "btn green"
+                            : "btn pink"
+                          : "btn"
+                      }
+                      onClick={() =>
+                        quizDispatch({
+                          type: "SET_SCORE",
+                          payload: { answer, currentQuestionNo, score },
+                        })
+                      }
+                    >
+                      {answer.text}
+                    </button>
+                  );
+                }
+              )}
+            </div>
           </div>
         </div>
-      </div>
-      <div className='flex justify-between'>
-        <Link to='/quizes'>
-          <button className='btn'>Quit Quiz</button>
-        </Link>
-        {quizQuestion > quiz.questions.length - 1 ? (
-          <Link to='/result' state={{ score, quiz }}>
-            <button className='btn'>Stop</button>
+        <div className='flex justify-between'>
+          <Link to='/quizes'>
+            <button className='btn'>Quit Quiz</button>
           </Link>
-        ) : (
-          <button
-            className='btn'
-            onClick={() => {
-              setColor(false);
-              setSeconds(10);
-              setQuizQuestion(() => quizQuestion + 1);
-            }}
-          >
-            Next
-          </button>
-        )}
+          {currentQuestionNo >= currentQuiz.questions.length - 1 ? (
+            <Link to='/result'>
+              <button className='btn'>Stop</button>
+            </Link>
+          ) : (
+            <button
+              className='btn'
+              onClick={() => {
+                // setSeconds(10);
+                quizDispatch({
+                  type: "CURRENT_QUESTION",
+                  payload: { questionNo: currentQuestionNo },
+                });
+              }}
+            >
+              Next
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

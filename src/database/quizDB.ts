@@ -1,9 +1,9 @@
 import { v4 } from "uuid";
 import { Quiz } from "./quizDB.types";
 
-export const quizes: Quiz[] = [
+export const quizzesDB: Quiz[] = [
     {
-        id: v4(),
+        id: '1',
         quizName: "Swimming Strokes",
         category: "Strokes",
         level: "level 1",
@@ -29,7 +29,7 @@ export const quizes: Quiz[] = [
                 ]
             },
             {
-                text: 'What stroke is a swimming stroke in which the arms are thrown forward together out of the water while the feet kick up and down?',
+                text: 'Which stroke is a swimming stroke in which the arms are thrown forward together out of the water while the feet kick up and down?',
                 points: 5,
                 negativePoints: 2,
                 options: [

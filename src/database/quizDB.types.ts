@@ -10,7 +10,7 @@ export type Questions = {
 }
 
 export type Quiz = {
-    id: number;
+    id: string;
     quizName: string;
     category: string;
     level: string;
