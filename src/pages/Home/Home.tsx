@@ -1,14 +1,27 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Footer } from "../../components";
 import { useQuiz } from "../../context";
+import QuizBanner from "./../../images/quiz-banner.jpg";
+import "./Home.css";
 
 export const Home = () => {
   const { categories, quizDispatch } = useQuiz();
 
   return (
     <div>
+      <div className='banner flex justify-center items-center md:mx-12 mx-8 my-4'>
+        <h1 className='md:text-5xl text-4xl md:px-9'>
+          Your interactive and fun way to learn swimming with tips and tricks.
+          <br />
+          <Link to='/quizes'>
+            <button className='btn pink my-3'>View Quizzes</button>
+          </Link>
+        </h1>
+        <img className='w-full max-w-3xl' src={QuizBanner} alt='QuizBanner' />
+      </div>
       <h1 className='text-4xl text-center'>Categories</h1>
-      <div className='flex flex-wrap'>
+      <div className='flex flex-wrap justify-center gap-12'>
         {categories.map((category) => {
           return (
             <div
@@ -45,6 +58,7 @@ export const Home = () => {
           );
         })}
       </div>
+      <Footer />
     </div>
   );
 };
