@@ -49,7 +49,7 @@ export const getScore = (state: typeof initialQuizState, action): number => {
   }
 };
 
-type ACTIONTYPE =
+export type ACTIONQUIZTYPE =
   | { type: "SET_QUIZ"; payload: { quizId: string } }
   | { type: "CURRENT_QUESTION"; payload: { questionNo: number } }
   | {
@@ -62,7 +62,7 @@ type ACTIONTYPE =
 
 export const quizReducer = (
   state: typeof initialQuizState,
-  action: ACTIONTYPE
+  action: ACTIONQUIZTYPE
 ) => {
   switch (action.type) {
     case "SET_QUIZ":

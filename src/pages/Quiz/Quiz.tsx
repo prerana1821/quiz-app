@@ -1,7 +1,59 @@
 import { Link } from "react-router-dom";
 import { useQuiz } from "../../context";
-import { useEffect } from "react";
+import { useEffect, useReducer } from "react";
 import "./Quiz.css";
+
+export type InitialResultState = {
+  attemptedQuestions: number;
+  rightAnswers: number;
+  wrongAnswers: number;
+};
+
+export const initialResultState: InitialResultState = {
+  attemptedQuestions: 0,
+  rightAnswers: 0,
+  wrongAnswers: 0,
+};
+
+export type ACTIONRESULTTYPE =
+  | { type: "ATTEMPTED_QUESTIONS"; payload: { questions: number } }
+  | { type: "RIGHT_ANSWERS"; payload: { rightAnswers: number } }
+  | {
+      type: "WRONG_ANSWERS";
+      payload: { wrongAnswers: number };
+    };
+
+export const resultReducer = (
+  state: typeof initialResultState,
+  action: ACTIONRESULTTYPE
+) => {
+  switch (action.type) {
+    case "ATTEMPTED_QUESTIONS":
+      return { ...state, attemptedQuestions: action.payload.questions + 1 };
+    case "RIGHT_ANSWERS":
+      return { ...state, rightAnswers: action.payload.rightAnswers + 1 };
+    case "WRONG_ANSWERS":
+      return { ...state, wrongAnswers: action.payload.wrongAnswers + 1 };
+    default:
+      return state;
+  }
+};
+
+export const setResult = (
+  correct: boolean,
+  resultState: InitialResultState,
+  dispatch
+) => {
+  return correct
+    ? dispatch({
+        type: "RIGHT_ANSWERS",
+        payload: { rightAnswers: resultState.rightAnswers },
+      })
+    : dispatch({
+        type: "WRONG_ANSWERS",
+        payload: { wrongAnswers: resultState.wrongAnswers },
+      });
+};
 
 export const QuizComp = () => {
   const {
@@ -35,6 +87,11 @@ export const QuizComp = () => {
     };
   }, [seconds, showAnswer]);
 
+  const [resultState, resultDispatch] = useReducer(
+    resultReducer,
+    initialResultState
+  );
+
   return (
     <div>
       <div className='p-6 flex flex-col justify-between height'>
@@ -62,12 +119,23 @@ export const QuizComp = () => {
                             : "btn pink"
                           : "btn"
                       }
-                      onClick={() =>
+                      onClick={() => {
+                        setResult(
+                          answer.isCorrect,
+                          resultState,
+                          resultDispatch
+                        );
+                        resultDispatch({
+                          type: "ATTEMPTED_QUESTIONS",
+                          payload: {
+                            questions: resultState.attemptedQuestions,
+                          },
+                        });
                         quizDispatch({
                           type: "SET_SCORE",
                           payload: { answer, currentQuestionNo, score },
-                        })
-                      }
+                        });
+                      }}
                     >
                       {answer.text}
                     </button>
@@ -89,7 +157,10 @@ export const QuizComp = () => {
             </button>
           </Link>
           {currentQuestionNo >= currentQuiz.questions.length - 1 ? (
-            <Link to='/result'>
+            <Link
+              to='/result'
+              state={{ resultState, questions: currentQuiz.questions.length }}
+            >
               <button className='btn'>Stop</button>
             </Link>
           ) : (
