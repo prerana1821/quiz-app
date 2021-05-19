@@ -43,7 +43,8 @@ type ACTIONTYPE =
       type: "SET_SCORE";
       payload: { answer: Options; currentQuestionNo: number; score: number };
     }
-  | { type: "SET_SECONDS"; payload: { seconds: number | string } };
+  | { type: "SET_SECONDS"; payload: { seconds: number | string } }
+  | { type: "QUIT_QUIZ" };
 
 export const quizReducer = (
   state: typeof initialQuizState,
@@ -89,6 +90,9 @@ export const quizReducer = (
         seconds: action.payload.seconds,
         showAnswer: typeof action.payload.seconds === "string",
       };
+    case "QUIT_QUIZ":
+      console.log("cool");
+      return initialQuizState;
     default:
       return state;
   }

@@ -79,7 +79,14 @@ export const QuizComp = () => {
         </div>
         <div className='flex justify-between'>
           <Link to='/quizes'>
-            <button className='btn'>Quit Quiz</button>
+            <button
+              onClick={() => {
+                quizDispatch({ type: "QUIT_QUIZ" });
+              }}
+              className='btn'
+            >
+              Quit Quiz
+            </button>
           </Link>
           {currentQuestionNo >= currentQuiz.questions.length - 1 ? (
             <Link to='/result'>
@@ -89,7 +96,6 @@ export const QuizComp = () => {
             <button
               className='btn'
               onClick={() => {
-                // setSeconds(10);
                 quizDispatch({
                   type: "CURRENT_QUESTION",
                   payload: { questionNo: currentQuestionNo },
