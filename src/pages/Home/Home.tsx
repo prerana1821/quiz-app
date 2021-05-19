@@ -7,23 +7,25 @@ export const Home = () => {
 
   return (
     <div>
-      <h1 className='text-4xl'>Categories</h1>
-      <div>
+      <h1 className='text-4xl text-center'>Categories</h1>
+      <div className='flex flex-wrap'>
         {categories.map((category) => {
           return (
             <div
               key={category.id}
-              className='bg-white shadow-lg rounded-2xl m-4'
+              className='w-full	max-w-sm bg-white shadow-lg rounded-2xl m-4'
             >
               <img
                 src={category.thumbnail}
                 alt={category.name}
-                className='rounded-t-2xl w-full'
+                className='rounded-t-2xl w-full h-60'
               />
               <div className='p-4 flex justify-between items-center'>
                 <div>
                   <h2 className='text-2xl text-left p-0'>{category.name}</h2>
-                  <p className='text-xl text-left'>{category.noOfQuizzes}</p>
+                  <p className='text-xl text-left'>
+                    Quizzes: {category.noOfQuizzes}
+                  </p>
                 </div>
                 <Link to={`/quizes`}>
                   <button

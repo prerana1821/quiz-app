@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useQuiz } from "../../context";
+import "./Result.css";
 
 export const Result = () => {
   const { score, currentQuiz } = useQuiz();
@@ -10,17 +11,16 @@ export const Result = () => {
   }, 0);
 
   return (
-    <div>
-      <h3>Congratulations!</h3>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt, illum.
-      </p>
-      <h3>Your Score</h3>
-      <p>
-        {score} / {totalScore}
-      </p>
-      <h3>Eanred Coins</h3>
-      <p>500</p>
+    <div className='quiz-result'>
+      <h3 className='text-3xl'>
+        Congratulations! <br /> You have scored :
+      </h3>
+      <div className='show-score'>
+        <p>
+          <div className='text-8xl block'>{score}</div> out of {totalScore}
+        </p>
+      </div>
+      <h3 className='text-2xl p-6'>You have earned 500 coins</h3>
       <Link to='/quizes'>
         <button className='btn pink'>Take New Quiz</button>
       </Link>

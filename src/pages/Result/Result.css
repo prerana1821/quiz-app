@@ -1,0 +1,16 @@
+.show-score {
+  width: 200px;
+  height: 200px;
+  background-color: aliceblue;
+  border-radius: 50%;
+  padding: 2rem;
+  text-align: center;
+  margin: auto;
+}
+
+.quiz-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
