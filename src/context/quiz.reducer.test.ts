@@ -22,6 +22,7 @@ describe('should test quiz reducer', () => {
             seconds: 10,
             viewByCategory: "",
             showAnswer: false,
+            searchString: "",
             currentQuiz: quizzesDB[0],
         });
     });
@@ -40,6 +41,7 @@ describe('should test quiz reducer', () => {
             quizzes: quizzesDB,
             categories: categoriesDB,
             currentQuestionNo: 0,
+            searchString: "",
             score: 0,
             seconds: 10,
             viewByCategory: "Strokes",
@@ -57,6 +59,7 @@ describe('should test quiz reducer', () => {
             score: 0,
             seconds: 10,
             viewByCategory: "Strokes",
+            searchString: "",
             showAnswer: false,
             currentQuiz: quizzesDB[0],
         }
@@ -74,6 +77,7 @@ describe('should test quiz reducer', () => {
             score: 0,
             seconds: 10,
             viewByCategory: "Strokes",
+            searchString: "",
             showAnswer: false,
             currentQuiz: quizzesDB[0],
         });
@@ -87,6 +91,7 @@ describe('should test quiz reducer', () => {
             score: 0,
             seconds: 10,
             viewByCategory: "Strokes",
+            searchString: "",
             showAnswer: false,
             currentQuiz: quizzesDB[0],
         }
@@ -101,6 +106,7 @@ describe('should test quiz reducer', () => {
             quizzes: quizzesDB,
             categories: categoriesDB,
             currentQuestionNo: 1,
+            searchString: "",
             score: 0,
             seconds: 3,
             viewByCategory: "Strokes",
@@ -117,6 +123,7 @@ describe('should test quiz reducer', () => {
             score: 0,
             seconds: 10,
             viewByCategory: "Strokes",
+            searchString: "",
             showAnswer: false,
             currentQuiz: quizzesDB[0],
         }
@@ -133,11 +140,46 @@ describe('should test quiz reducer', () => {
             currentQuestionNo: 1,
             score: 0,
             seconds: 'Time Out',
+            searchString: "",
             viewByCategory: "Strokes",
             showAnswer: true,
             currentQuiz: quizzesDB[0],
         });
     })
+
+    test('should set & display searched quizzes', () => {
+
+        const quizState: InitialQuizState = {
+            quizzes: quizzesDB,
+            categories: categoriesDB,
+            currentQuestionNo: 0,
+            score: 0,
+            seconds: 10,
+            searchString: "",
+            viewByCategory: "",
+            showAnswer: false,
+            currentQuiz: null,
+        }
+
+        const action: ACTIONQUIZTYPE = {
+            type: "SEARCH_QUIZ",
+            payload: { searchString: "cha" }
+        }
+
+        const state = quizReducer(quizState, action);
+        expect(state).toEqual({
+            quizzes: quizzesDB,
+            categories: categoriesDB,
+            currentQuestionNo: 0,
+            score: 0,
+            seconds: 10,
+            searchString: "cha",
+            viewByCategory: "",
+            showAnswer: false,
+            currentQuiz: null,
+        });
+    })
+
 
     test('should quit the quiz, bring everything to initial state', () => {
         const quizState = {
@@ -147,6 +189,7 @@ describe('should test quiz reducer', () => {
             score: 8,
             seconds: 7,
             viewByCategory: "Strokes",
+            searchString: "",
             showAnswer: true,
             currentQuiz: quizzesDB[0],
         }
@@ -160,6 +203,7 @@ describe('should test quiz reducer', () => {
             quizzes: quizzesDB,
             categories: categoriesDB,
             currentQuestionNo: 0,
+            searchString: "",
             score: 0,
             seconds: 10,
             viewByCategory: "",
@@ -176,6 +220,7 @@ describe('should test quiz reducer', () => {
             currentQuestionNo: 1,
             score: 5,
             seconds: 7,
+            searchString: "",
             viewByCategory: "",
             showAnswer: false,
             currentQuiz: quizzesDB[0],
@@ -205,6 +250,7 @@ describe('should test quiz reducer', () => {
             score: 10,
             seconds: "Good Job",
             viewByCategory: "",
+            searchString: "",
             showAnswer: true,
             currentQuiz: quizzesDB[0],
         });
@@ -223,6 +269,7 @@ describe('should test quiz reducer', () => {
             score: 5,
             seconds: 7,
             viewByCategory: "",
+            searchString: "",
             showAnswer: false,
             currentQuiz: quizzesDB[0],
         }
@@ -239,6 +286,7 @@ describe('should test quiz reducer', () => {
             currentQuestionNo: 1,
             score: 5,
             seconds: 7,
+            searchString: "",
             viewByCategory: "",
             showAnswer: false,
             currentQuiz: quizzesDB[0],

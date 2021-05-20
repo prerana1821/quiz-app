@@ -34,6 +34,23 @@ export const getQuizzesByCatgeory = (
     );
 };
 
+export const getSearchedQuiz = (
+    categoryQuizzes: Quiz[],
+    searchString: string
+): Quiz[] => {
+    return categoryQuizzes.filter((quiz) => {
+        // const searchValue = quiz.quizName.toLowerCase();
+        // return searchString !== ""
+        //   ? searchValue.indexOf(searchString.toLowerCase()) !== -1
+        //   : categoryQuizzes;
+        return searchString.length !== 1
+            ? quiz.quizName
+                .toLowerCase()
+                .includes(searchString.toLowerCase().trim())
+            : categoryQuizzes;
+    });
+};
+
 
 export const getScore = (state: typeof initialQuizState, action): number => {
     if (action.payload.answer.isCorrect) {

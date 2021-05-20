@@ -2,7 +2,7 @@
 import { ACTIONQUIZTYPE, InitialQuizState } from "../context/quiz.reducer.types";
 import { categoriesDB, quizzesDB } from "../database";
 import { Category } from "../database/quizDB.types";
-import { getQuizzesByCatgeory, getScore } from "./utlis";
+import { getCategoryName, getQuizzesByCatgeory, getScore, getSearchedQuiz } from "./utlis";
 // import { resultDispatch } from "../pages/Quiz/Quiz";
 jest.mock('../pages/Quiz/Quiz.tsx');
 
@@ -17,6 +17,7 @@ describe('should test utility function', () => {
             score: 5,
             seconds: 7,
             viewByCategory: "",
+            searchString: "",
             showAnswer: false,
             currentQuiz: quizzesDB[0],
         }
@@ -51,6 +52,18 @@ describe('should test utility function', () => {
             quizzesDB[0]
         ]);
     })
+
+    test('should get category name', () => {
+        const state = getCategoryName('11', categoriesDB)
+        expect(state).toBe('Strokes');
+    })
+
+    test('should search quiz by search query', () => {
+        const searchString = "cha";
+        const state = getSearchedQuiz(quizzesDB, searchString);
+        expect(state).toEqual([quizzesDB[1]]);
+    })
+
 
     // test('should call dispatch depending of right answer', () => {
 

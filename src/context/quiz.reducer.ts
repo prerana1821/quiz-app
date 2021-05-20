@@ -19,6 +19,11 @@ export const quizReducer = (
                 ...state,
                 viewByCategory: action.payload.category,
             };
+        case "SEARCH_QUIZ":
+            return {
+                ...state,
+                searchString: action.payload.searchString,
+            };
         case "CURRENT_QUESTION":
             return {
                 ...state,

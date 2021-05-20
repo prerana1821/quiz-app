@@ -1,0 +1,12 @@
+.search {
+  text-align: end;
+  margin: 1.5rem 4rem;
+}
+
+.search-input {
+  padding: 0.6rem 1rem;
+  border: 2px solid var(--dk-pink);
+  width: 300px;
+  border-radius: 0.5rem;
+  outline: aliceblue;
+}

@@ -8,6 +8,7 @@ export type InitialQuizState = {
     seconds: number;
     showAnswer: boolean;
     viewByCategory: string;
+    searchString: string;
     currentQuiz: null | Quiz;
 };
 
@@ -19,5 +20,6 @@ export type ACTIONQUIZTYPE =
         payload: { answer: Options; currentQuestionNo: number; score: number };
     }
     | { type: "SET_SECONDS"; payload: { seconds: number | string } }
+    | { type: "SEARCH_QUIZ"; payload: { searchString: string } }
     | { type: "CATEGORY_QUIZZES"; payload: { category: Category } }
     | { type: "QUIT_QUIZ" };
