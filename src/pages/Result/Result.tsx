@@ -8,12 +8,6 @@ import "./Result.css";
 export const Result = () => {
   const { score, currentQuiz } = useQuiz();
   const { state } = useLocation();
-
-  // {
-  //   resultState: InitialResultState;
-  //   questions: number;
-  // }
-
   console.log({ state });
 
   const totalScore = currentQuiz.questions.reduce((acc, value): number => {

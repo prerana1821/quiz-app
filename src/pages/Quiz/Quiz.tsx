@@ -3,7 +3,7 @@ import { useQuiz } from "../../context";
 import { useEffect, useReducer } from "react";
 import "./Quiz.css";
 import { InitialResultState } from "../Result/Result.types";
-import { resultReducer } from "./resultReducer";
+import { resultReducer } from "./result.reducer";
 import { setResult } from "../../utils/utlis";
 
 export const initialResultState: InitialResultState = {
