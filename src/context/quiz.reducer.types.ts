@@ -18,9 +18,9 @@ export type InitialQuizState = {
     categories: Category[];
     currentQuestionNo: number;
     score: number;
-    seconds: number;
+    seconds: number | string;
     showAnswer: boolean;
-    viewByCategory: string;
+    viewByCategory: Category;
     searchString: string;
     currentQuiz: null | Quiz;
 };

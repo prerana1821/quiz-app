@@ -1,19 +1,26 @@
 import { getScore } from "../utils/utlis";
 import { initialQuizState } from "./QuizProvider";
-import { ACTIONQUIZTYPE } from "./quiz.reducer.types";
+import { ACTIONQUIZTYPE, InitialQuizState } from "./quiz.reducer.types";
 
 export const quizReducer = (
-    state: typeof initialQuizState,
+    state: InitialQuizState,
     action: ACTIONQUIZTYPE
-) => {
+): InitialQuizState => {
     switch (action.type) {
         case "SET_QUIZ":
-            return {
-                ...state,
-                currentQuiz: state.quizzes.find(
+            {
+                const quiz = state.quizzes.find(
                     (quiz) => quiz.id === action.payload.quizId
-                ),
-            };
+                )
+                if (quiz) {
+                    return {
+                        ...state,
+                        currentQuiz: quiz,
+                    };
+                } else {
+                    return state;
+                }
+            }
         case "CATEGORY_QUIZZES":
             return {
                 ...state,

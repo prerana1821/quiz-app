@@ -1,5 +1,6 @@
 import { createContext, useContext, useReducer } from "react";
 import { quizzesDB, categoriesDB } from "../database";
+import { Category } from "../database/quizDB.types";
 import { getQuizzesByCatgeory, getSearchedQuiz } from "../utils/utlis";
 import { quizReducer } from "./quiz.reducer";
 import { ContextInitialState, InitialQuizState } from "./quiz.reducer.types";
@@ -14,7 +15,7 @@ export const initialQuizState: InitialQuizState = {
   currentQuestionNo: 0,
   score: 0,
   seconds: 10,
-  viewByCategory: "",
+  viewByCategory: {} as Category,
   searchString: "",
   showAnswer: false,
   currentQuiz: null,
@@ -33,6 +34,7 @@ export const QuizProvider = ({ children }) => {
       seconds,
       showAnswer,
     },
+    // state,
     quizDispatch,
   ] = useReducer(quizReducer, initialQuizState);
 

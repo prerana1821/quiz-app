@@ -3,6 +3,7 @@ import { quizReducer } from "./quiz.reducer";
 import { initialQuizState } from "./QuizProvider";
 import { ACTIONQUIZTYPE, InitialQuizState } from "./quiz.reducer.types";
 import { getScore } from "./../utils/utlis";
+import { Category } from "../database/quizDB.types";
 jest.mock('../utils/utlis.ts');
 
 describe('should test quiz reducer', () => {
@@ -20,7 +21,7 @@ describe('should test quiz reducer', () => {
             currentQuestionNo: 0,
             score: 0,
             seconds: 10,
-            viewByCategory: "",
+            viewByCategory: {},
             showAnswer: false,
             searchString: "",
             currentQuiz: quizzesDB[0],
@@ -32,7 +33,13 @@ describe('should test quiz reducer', () => {
         const action: ACTIONQUIZTYPE = {
             type: "CATEGORY_QUIZZES",
             payload: {
-                category: "Strokes"
+                category: {
+                    id: '11',
+                    name: 'Strokes',
+                    noOfQuizzes: 1,
+                    thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-9fmmfI8WbHzdsod7tTy__b4OE_ifPQtAg&usqp=CAU',
+                    description: 'string',
+                }
             }
         }
 
@@ -44,7 +51,13 @@ describe('should test quiz reducer', () => {
             searchString: "",
             score: 0,
             seconds: 10,
-            viewByCategory: "Strokes",
+            viewByCategory: {
+                id: '11',
+                name: 'Strokes',
+                noOfQuizzes: 1,
+                thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-9fmmfI8WbHzdsod7tTy__b4OE_ifPQtAg&usqp=CAU',
+                description: 'string',
+            },
             showAnswer: false,
             currentQuiz: null,
         });
@@ -52,13 +65,19 @@ describe('should test quiz reducer', () => {
 
     test('should set question no for selected quiz', () => {
 
-        const quizState = {
+        const quizState: InitialQuizState = {
             quizzes: quizzesDB,
             categories: categoriesDB,
             currentQuestionNo: 0,
             score: 0,
             seconds: 10,
-            viewByCategory: "Strokes",
+            viewByCategory: {
+                id: '11',
+                name: 'Strokes',
+                noOfQuizzes: 1,
+                thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-9fmmfI8WbHzdsod7tTy__b4OE_ifPQtAg&usqp=CAU',
+                description: 'string',
+            },
             searchString: "",
             showAnswer: false,
             currentQuiz: quizzesDB[0],
@@ -76,7 +95,13 @@ describe('should test quiz reducer', () => {
             currentQuestionNo: 2,
             score: 0,
             seconds: 10,
-            viewByCategory: "Strokes",
+            viewByCategory: {
+                id: '11',
+                name: 'Strokes',
+                noOfQuizzes: 1,
+                thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-9fmmfI8WbHzdsod7tTy__b4OE_ifPQtAg&usqp=CAU',
+                description: 'string',
+            },
             searchString: "",
             showAnswer: false,
             currentQuiz: quizzesDB[0],
@@ -84,13 +109,19 @@ describe('should test quiz reducer', () => {
     });
 
     test('should set seconds for a question of a particular quiz', () => {
-        const quizState = {
+        const quizState: InitialQuizState = {
             quizzes: quizzesDB,
             categories: categoriesDB,
             currentQuestionNo: 1,
             score: 0,
             seconds: 10,
-            viewByCategory: "Strokes",
+            viewByCategory: {
+                id: '11',
+                name: 'Strokes',
+                noOfQuizzes: 1,
+                thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-9fmmfI8WbHzdsod7tTy__b4OE_ifPQtAg&usqp=CAU',
+                description: 'string',
+            },
             searchString: "",
             showAnswer: false,
             currentQuiz: quizzesDB[0],
@@ -109,20 +140,32 @@ describe('should test quiz reducer', () => {
             searchString: "",
             score: 0,
             seconds: 3,
-            viewByCategory: "Strokes",
+            viewByCategory: {
+                id: '11',
+                name: 'Strokes',
+                noOfQuizzes: 1,
+                thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-9fmmfI8WbHzdsod7tTy__b4OE_ifPQtAg&usqp=CAU',
+                description: 'string',
+            },
             showAnswer: false,
             currentQuiz: quizzesDB[0],
         });
     });
 
     test('should set test for a question of a particular quiz, if seconds is a string', () => {
-        const quizState = {
+        const quizState: InitialQuizState = {
             quizzes: quizzesDB,
             categories: categoriesDB,
             currentQuestionNo: 1,
             score: 0,
             seconds: 10,
-            viewByCategory: "Strokes",
+            viewByCategory: {
+                id: '11',
+                name: 'Strokes',
+                noOfQuizzes: 1,
+                thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-9fmmfI8WbHzdsod7tTy__b4OE_ifPQtAg&usqp=CAU',
+                description: 'string',
+            },
             searchString: "",
             showAnswer: false,
             currentQuiz: quizzesDB[0],
@@ -141,7 +184,13 @@ describe('should test quiz reducer', () => {
             score: 0,
             seconds: 'Time Out',
             searchString: "",
-            viewByCategory: "Strokes",
+            viewByCategory: {
+                id: '11',
+                name: 'Strokes',
+                noOfQuizzes: 1,
+                thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-9fmmfI8WbHzdsod7tTy__b4OE_ifPQtAg&usqp=CAU',
+                description: 'string',
+            },
             showAnswer: true,
             currentQuiz: quizzesDB[0],
         });
@@ -156,7 +205,7 @@ describe('should test quiz reducer', () => {
             score: 0,
             seconds: 10,
             searchString: "",
-            viewByCategory: "",
+            viewByCategory: {} as Category,
             showAnswer: false,
             currentQuiz: null,
         }
@@ -174,7 +223,7 @@ describe('should test quiz reducer', () => {
             score: 0,
             seconds: 10,
             searchString: "cha",
-            viewByCategory: "",
+            viewByCategory: {},
             showAnswer: false,
             currentQuiz: null,
         });
@@ -182,13 +231,19 @@ describe('should test quiz reducer', () => {
 
 
     test('should quit the quiz, bring everything to initial state', () => {
-        const quizState = {
+        const quizState: InitialQuizState = {
             quizzes: quizzesDB,
             categories: categoriesDB,
             currentQuestionNo: 1,
             score: 8,
             seconds: 7,
-            viewByCategory: "Strokes",
+            viewByCategory: {
+                id: '11',
+                name: 'Strokes',
+                noOfQuizzes: 1,
+                thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-9fmmfI8WbHzdsod7tTy__b4OE_ifPQtAg&usqp=CAU',
+                description: 'string',
+            },
             searchString: "",
             showAnswer: true,
             currentQuiz: quizzesDB[0],
@@ -206,7 +261,7 @@ describe('should test quiz reducer', () => {
             searchString: "",
             score: 0,
             seconds: 10,
-            viewByCategory: "",
+            viewByCategory: {},
             showAnswer: false,
             currentQuiz: null,
         });
@@ -221,7 +276,13 @@ describe('should test quiz reducer', () => {
             score: 5,
             seconds: 7,
             searchString: "",
-            viewByCategory: "",
+            viewByCategory: {
+                id: '11',
+                name: 'Strokes',
+                noOfQuizzes: 1,
+                thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-9fmmfI8WbHzdsod7tTy__b4OE_ifPQtAg&usqp=CAU',
+                description: 'string',
+            },
             showAnswer: false,
             currentQuiz: quizzesDB[0],
         }
@@ -249,7 +310,13 @@ describe('should test quiz reducer', () => {
             currentQuestionNo: 1,
             score: 10,
             seconds: "Good Job",
-            viewByCategory: "",
+            viewByCategory: {
+                id: '11',
+                name: 'Strokes',
+                noOfQuizzes: 1,
+                thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-9fmmfI8WbHzdsod7tTy__b4OE_ifPQtAg&usqp=CAU',
+                description: 'string',
+            },
             searchString: "",
             showAnswer: true,
             currentQuiz: quizzesDB[0],
@@ -268,7 +335,13 @@ describe('should test quiz reducer', () => {
             currentQuestionNo: 1,
             score: 5,
             seconds: 7,
-            viewByCategory: "",
+            viewByCategory: {
+                id: '11',
+                name: 'Strokes',
+                noOfQuizzes: 1,
+                thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-9fmmfI8WbHzdsod7tTy__b4OE_ifPQtAg&usqp=CAU',
+                description: 'string',
+            },
             searchString: "",
             showAnswer: false,
             currentQuiz: quizzesDB[0],
@@ -287,7 +360,13 @@ describe('should test quiz reducer', () => {
             score: 5,
             seconds: 7,
             searchString: "",
-            viewByCategory: "",
+            viewByCategory: {
+                id: '11',
+                name: 'Strokes',
+                noOfQuizzes: 1,
+                thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-9fmmfI8WbHzdsod7tTy__b4OE_ifPQtAg&usqp=CAU',
+                description: 'string',
+            },
             showAnswer: false,
             currentQuiz: quizzesDB[0],
         });
