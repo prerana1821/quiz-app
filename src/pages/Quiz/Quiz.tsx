@@ -25,14 +25,14 @@ export const QuizComp = () => {
   useEffect(() => {
     let quizCounter;
     if (seconds > 0) {
-      quizCounter = setTimeout(
-        () =>
+      quizCounter = setTimeout(() => {
+        if (typeof seconds === "number") {
           quizDispatch({
             type: "SET_SECONDS",
             payload: { seconds: seconds - 1 },
-          }),
-        1000
-      );
+          });
+        }
+      }, 1000);
     } else {
       quizDispatch({
         type: "SET_SECONDS",
