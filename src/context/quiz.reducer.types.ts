@@ -6,7 +6,7 @@ export type ContextInitialState = {
     categories: Category[];
     searchedQuizzes: Quiz[];
     categoryQuizzes: Quiz[];
-    currentQuiz: Quiz;
+    currentQuiz: null | Quiz;
     score: number;
     seconds: number;
     showAnswer: boolean;
