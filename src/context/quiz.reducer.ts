@@ -1,6 +1,6 @@
 import { getScore } from "../utlis";
 import { initialQuizState } from "./QuizProvider";
-import { ACTIONQUIZTYPE } from "./quizReducer.types";
+import { ACTIONQUIZTYPE } from "./quiz.reducer.types";
 
 export const quizReducer = (
     state: typeof initialQuizState,
@@ -40,7 +40,6 @@ export const quizReducer = (
                 showAnswer: typeof action.payload.seconds === "string",
             };
         case "QUIT_QUIZ":
-            console.log("cool");
             return initialQuizState;
         default:
             return state;

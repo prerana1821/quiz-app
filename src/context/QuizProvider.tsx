@@ -1,8 +1,8 @@
 import { createContext, useContext, useReducer } from "react";
 import { quizzesDB, Quiz, categoriesDB } from "../database";
 import { getQuizzesByCatgeory } from "../utlis";
-import { quizReducer } from "./quizReducer";
-import { InitialQuizState } from "./quizReducer.types";
+import { quizReducer } from "./quiz.reducer";
+import { InitialQuizState } from "./quiz.reducer.types";
 
 export const QuizContext = createContext<Quiz[] | null>(null);
 
@@ -16,6 +16,7 @@ export const initialQuizState: InitialQuizState = {
   showAnswer: false,
   currentQuiz: null,
 };
+
 export const QuizProvider = ({ children }) => {
   const [
     {
