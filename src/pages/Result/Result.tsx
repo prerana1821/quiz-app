@@ -17,7 +17,8 @@ export const Result = () => {
   return (
     <div className='quiz-result'>
       <h3 className='text-3xl'>
-        Congratulations! <br /> You have scored :
+        {score < 3 ? "Ohh Noo, Sorry!" : "Congratulations!"} <br /> You have
+        scored :
       </h3>
       <div className='show-score'>
         <p>

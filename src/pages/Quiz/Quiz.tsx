@@ -51,7 +51,7 @@ export const QuizComp = () => {
 
   return (
     <div>
-      <div className='p-6 flex flex-col justify-between height'>
+      <div className='p-6 flex flex-col justify-between height md:w-7/12 md:m-auto'>
         <div>
           <h2 className='text-xl'>Timer: {seconds}</h2>
           <p className='text-2xl'>
@@ -73,7 +73,7 @@ export const QuizComp = () => {
                         showAnswer
                           ? answer.isCorrect
                             ? "btn green"
-                            : "btn pink"
+                            : "btn tri-pink"
                           : "btn"
                       }
                       onClick={() => {

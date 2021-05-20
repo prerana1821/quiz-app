@@ -15,29 +15,33 @@ export const Rules = () => {
 
   return (
     <div>
-      <section className='shadow-xl rounded-2xl m-5 w-max p-6 flex justify-center flex-col m-auto'>
+      <section className='shadow-xl rounded-2xl m-5 md:w-max p-6 flex justify-center flex-col m-auto'>
         <h2 className='text-4xl'>Instructions</h2>
         <p>{getQuiz.quizName}</p>
         <p>
           Category:
           <span className='pink-txt'>
+            {" "}
             {getCategoryName(getQuiz.categoryId, categories)}
           </span>
         </p>
         <p>
           This quiz is of level:
-          <span className='pink-txt'>{getQuiz.level}</span>
+          <span className='pink-txt'> {getQuiz.level}</span>
         </p>
         <p>
           There are a total of
-          <span className='pink-txt'>{getQuiz.questions.length} questions</span>
+          <span className='pink-txt'>
+            {" "}
+            {getQuiz.questions.length} questions
+          </span>
         </p>
         <p>
-          Each question is of <span className='pink-txt'>5 points</span>.
+          Each question is of <span className='pink-txt'> 5 points</span>.
         </p>
         <p>
           Every wrong answer has a negative marking of
-          <span className='pink-txt'>2 points</span>
+          <span className='pink-txt'> 2 points</span>
         </p>
         <p>
           You get <span className='pink-txt'>30 seconds</span> to answer each
