@@ -3,6 +3,8 @@ import { ACTIONQUIZTYPE, InitialQuizState } from "../context/quiz.reducer.types"
 import { categoriesDB, quizzesDB } from "../database";
 import { Category } from "../database/quizDB.types";
 import { getQuizzesByCatgeory, getScore } from "./utlis";
+// import { resultDispatch } from "../pages/Quiz/Quiz";
+jest.mock('../pages/Quiz/Quiz.tsx');
 
 
 describe('should test utility function', () => {
@@ -49,5 +51,21 @@ describe('should test utility function', () => {
             quizzesDB[0]
         ]);
     })
+
+    // test('should call dispatch depending of right answer', () => {
+
+    //     const resultState: InitialResultState = {
+    //         attemptedQuestions: 2,
+    //         rightAnswers: 1,
+    //         wrongAnswers: 0,
+    //     }
+
+    //     // dispatch.mockImplementation();
+
+    //     const state = setResult(true, resultState, dispatch);
+    //     expect(state).toEqual(
+
+    //     );
+    // })
 
 });
