@@ -39,10 +39,6 @@ export const getSearchedQuiz = (
     searchString: string
 ): Quiz[] => {
     return categoryQuizzes.filter((quiz) => {
-        // const searchValue = quiz.quizName.toLowerCase();
-        // return searchString !== ""
-        //   ? searchValue.indexOf(searchString.toLowerCase()) !== -1
-        //   : categoryQuizzes;
         return searchString.length !== 1
             ? quiz.quizName
                 .toLowerCase()
