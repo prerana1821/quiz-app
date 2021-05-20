@@ -4,7 +4,9 @@ import { getQuizzesByCatgeory, getSearchedQuiz } from "../utils/utlis";
 import { quizReducer } from "./quiz.reducer";
 import { ContextInitialState, InitialQuizState } from "./quiz.reducer.types";
 
-export const QuizContext = createContext<Quiz[]>({} as ContextInitialState);
+export const QuizContext = createContext<ContextInitialState>(
+  {} as ContextInitialState
+);
 
 export const initialQuizState: InitialQuizState = {
   quizzes: quizzesDB,
@@ -58,5 +60,5 @@ export const QuizProvider = ({ children }) => {
 };
 
 export const useQuiz = () => {
-  return useContext<Quiz[]>(QuizContext);
+  return useContext(QuizContext);
 };
