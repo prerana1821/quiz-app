@@ -8,7 +8,7 @@ export type ContextInitialState = {
     categoryQuizzes: Quiz[];
     currentQuiz: null | Quiz;
     score: number;
-    seconds: number;
+    seconds: number | string;
     showAnswer: boolean;
     currentQuestionNo: number;
 }
