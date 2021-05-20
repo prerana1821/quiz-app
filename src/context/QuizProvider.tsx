@@ -58,5 +58,5 @@ export const QuizProvider = ({ children }) => {
 };
 
 export const useQuiz = () => {
-  return useContext<Quiz[] | null>(QuizContext);
+  return useContext<Quiz[]>(QuizContext);
 };
