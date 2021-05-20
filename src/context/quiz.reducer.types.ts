@@ -1,5 +1,18 @@
 import { Category, Options, Quiz } from "../database/quizDB.types";
 
+export type ContextInitialState = {
+    quizzes: Quiz[];
+    quizDispatch: (action: ACTIONQUIZTYPE) => void;
+    categories: Category[];
+    searchedQuizzes: Quiz[];
+    categoryQuizzes: Quiz[];
+    currentQuiz: Quiz;
+    score: number;
+    seconds: number;
+    showAnswer: boolean;
+    currentQuestionNo: number;
+}
+
 export type InitialQuizState = {
     quizzes: Quiz[];
     categories: Category[];
