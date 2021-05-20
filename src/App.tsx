@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { Header } from "./components";
-import { Home, Quizes, QuizComp, Result } from "./pages";
+import { Home, Quizes, QuizComp, Result, Rules } from "./pages";
 
 function App() {
   return (
@@ -10,6 +10,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />}></Route>
           <Route path='/quizes' element={<Quizes />}></Route>
+          <Route path='/rules/:quizId' element={<Rules />}></Route>
           <Route path='/quizes/:quizId' element={<QuizComp />}></Route>
           <Route path='/result' element={<Result />}></Route>
         </Routes>

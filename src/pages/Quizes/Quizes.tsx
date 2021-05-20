@@ -1,14 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useQuiz } from "../../context";
+import { getCategoryName } from "../../utils/utlis";
 
 export const Quizes = () => {
-  const { categoryQuizzes, categories, quizDispatch } = useQuiz();
-
-  const getCategoryName = (categoryId: string): string => {
-    const cat = categories.find((category) => category.id === categoryId);
-    return cat.name;
-  };
+  const { categoryQuizzes, categories } = useQuiz();
 
   return (
     <div className='flex flex-wrap'>
@@ -27,20 +23,20 @@ export const Quizes = () => {
               <div>
                 <h2 className='text-2xl text-left p-0'>{quiz.quizName}</h2>
                 <p className='text-xl text-left'>
-                  Category: {getCategoryName(quiz.categoryId)}
+                  Category: {getCategoryName(quiz.categoryId, categories)}
                 </p>
               </div>
-              <Link to={`/quizes/${quiz.id}`}>
+              <Link to={`/rules/${quiz.id}`}>
                 <button
-                  onClick={() =>
-                    quizDispatch({
-                      type: "SET_QUIZ",
-                      payload: { quizId: quiz.id },
-                    })
-                  }
+                  // onClick={() =>
+                  //   quizDispatch({
+                  //     type: "SET_QUIZ",
+                  //     payload: { quizId: quiz.id },
+                  //   })
+                  // }
                   className='text-white font-bold py-3.5 px-3 rounded-lg text-lg pink'
                 >
-                  Start Quiz
+                  Take Quiz
                 </button>
               </Link>
             </div>

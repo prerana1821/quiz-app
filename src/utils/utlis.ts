@@ -3,6 +3,12 @@ import { Quiz } from "../database";
 import { Category } from "../database/quizDB.types";
 import { InitialResultState } from "../pages/Result/Result.types";
 
+export const getCategoryName = (categoryId: string, categories: Category[]): string | undefined => {
+    const cat = categories.find((category) => category.id === categoryId);
+    return cat ? cat.name : undefined;
+};
+
+
 export const setResult = (
     correct: boolean,
     resultState: InitialResultState,
