@@ -2,8 +2,8 @@ import { categoriesDB, quizzesDB } from "../database";
 import { quizReducer } from "./quiz.reducer";
 import { initialQuizState } from "./QuizProvider";
 import { ACTIONQUIZTYPE, InitialQuizState } from "./quiz.reducer.types";
-import { getScore } from "../utlis";
-jest.mock('./../utlis.ts');
+import { getScore } from "./../utils/utlis";
+jest.mock('../utils/utlis.ts');
 
 describe('should test quiz reducer', () => {
     test('should set quiz', () => {
@@ -244,6 +244,4 @@ describe('should test quiz reducer', () => {
             currentQuiz: quizzesDB[0],
         });
     })
-
-
 });

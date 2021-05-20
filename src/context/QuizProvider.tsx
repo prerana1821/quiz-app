@@ -1,6 +1,6 @@
 import { createContext, useContext, useReducer } from "react";
 import { quizzesDB, Quiz, categoriesDB } from "../database";
-import { getQuizzesByCatgeory } from "../utlis";
+import { getQuizzesByCatgeory } from "../utils/utlis";
 import { quizReducer } from "./quiz.reducer";
 import { InitialQuizState } from "./quiz.reducer.types";
 

@@ -1,4 +1,4 @@
-import { getScore } from "../utlis";
+import { getScore } from "../utils/utlis";
 import { initialQuizState } from "./QuizProvider";
 import { ACTIONQUIZTYPE } from "./quiz.reducer.types";
 

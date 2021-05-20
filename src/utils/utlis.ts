@@ -1,7 +1,7 @@
-import { initialQuizState } from "./context/QuizProvider";
-import { Quiz } from "./database";
-import { Category } from "./database/quizDB.types";
-import { InitialResultState } from "./pages/Result/Result.types";
+import { initialQuizState } from "../context/QuizProvider";
+import { Quiz } from "../database";
+import { Category } from "../database/quizDB.types";
+import { InitialResultState } from "../pages/Result/Result.types";
 
 export const setResult = (
     correct: boolean,

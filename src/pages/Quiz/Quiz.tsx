@@ -4,7 +4,7 @@ import { useEffect, useReducer } from "react";
 import "./Quiz.css";
 import { InitialResultState } from "../Result/Result.types";
 import { resultReducer } from "./resultReducer";
-import { setResult } from "../../utlis";
+import { setResult } from "../../utils/utlis";
 
 export const initialResultState: InitialResultState = {
   attemptedQuestions: 0,
