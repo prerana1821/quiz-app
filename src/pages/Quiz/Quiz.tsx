@@ -55,15 +55,15 @@ export const QuizComp = () => {
         <div>
           <h2 className='text-xl'>Timer: {seconds}</h2>
           <p className='text-2xl'>
-            Question {currentQuestionNo + 1}/{currentQuiz.questions.length}
+            Question {currentQuestionNo + 1}/{currentQuiz?.questions.length}
           </p>
           <p className='text-xl'>Score: {score}</p>
           <div>
             <p className='text-3xl'>
-              {currentQuiz.questions[currentQuestionNo].text}
+              {currentQuiz?.questions[currentQuestionNo].text}
             </p>
             <div className='flex flex-col gap-4 py-4'>
-              {currentQuiz.questions[currentQuestionNo].options.map(
+              {currentQuiz?.questions[currentQuestionNo].options.map(
                 (answer) => {
                   return (
                     <button
@@ -113,10 +113,10 @@ export const QuizComp = () => {
               Quit Quiz
             </button>
           </Link>
-          {currentQuestionNo >= currentQuiz.questions.length - 1 ? (
+          {currentQuestionNo >= currentQuiz!.questions.length - 1 ? (
             <Link
               to='/result'
-              state={{ resultState, questions: currentQuiz.questions.length }}
+              state={{ resultState, questions: currentQuiz?.questions.length }}
             >
               <button className='btn'>Stop</button>
             </Link>

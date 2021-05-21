@@ -16,7 +16,7 @@ describe('should test utility function', () => {
             currentQuestionNo: 1,
             score: 5,
             seconds: 7,
-            viewByCategory: "",
+            viewByCategory: {} as Category,
             searchString: "",
             showAnswer: false,
             currentQuiz: quizzesDB[0],

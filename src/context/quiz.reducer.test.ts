@@ -299,7 +299,6 @@ describe('should test quiz reducer', () => {
             },
         }
 
-        // jest.mock('getScore', () => 10);
         getScore.mockImplementation((): number => 10);
 
         const state = quizReducer(quizState, action);

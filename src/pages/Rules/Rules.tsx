@@ -17,23 +17,23 @@ export const Rules = () => {
     <div>
       <section className='shadow-xl rounded-2xl m-5 md:w-max p-6 flex justify-center flex-col m-auto'>
         <h2 className='text-4xl'>Instructions</h2>
-        <p>{getQuiz.quizName}</p>
+        <p>{getQuiz?.quizName}</p>
         <p>
           Category:
           <span className='pink-txt'>
             {" "}
-            {getCategoryName(getQuiz.categoryId, categories)}
+            {getCategoryName(getQuiz!.categoryId, categories)}
           </span>
         </p>
         <p>
           This quiz is of level:
-          <span className='pink-txt'> {getQuiz.level}</span>
+          <span className='pink-txt'> {getQuiz?.level}</span>
         </p>
         <p>
           There are a total of
           <span className='pink-txt'>
             {" "}
-            {getQuiz.questions.length} questions
+            {getQuiz?.questions.length} questions
           </span>
         </p>
         <p>
