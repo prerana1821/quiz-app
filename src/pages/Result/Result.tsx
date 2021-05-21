@@ -10,7 +10,7 @@ export const Result = () => {
   const { state } = useLocation();
   console.log({ state });
 
-  const totalScore = currentQuiz.questions.reduce((acc, value): number => {
+  const totalScore = currentQuiz?.questions.reduce((acc, value): number => {
     return acc + value.points;
   }, 0);
 
