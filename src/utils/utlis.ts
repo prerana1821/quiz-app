@@ -1,4 +1,4 @@
-import { initialQuizState } from "../context/QuizProvider";
+import { InitialQuizState } from "../context/quiz.reducer.types";
 import { Quiz } from "../database";
 import { Category } from "../database/quizDB.types";
 import { InitialResultState } from "../pages/Result/Result.types";
@@ -29,8 +29,9 @@ export const getQuizzesByCatgeory = (
     quizzes: Quiz[],
     viewByCategory: Category
 ): Quiz[] => {
+    console.log({ quizzes, viewByCategory });
     return quizzes.filter((quiz) =>
-        viewByCategory ? quiz.categoryId === viewByCategory.id : quiz
+        (Object.keys(viewByCategory).length === 0 && viewByCategory.constructor === Object) ? quiz : quiz.categoryId === viewByCategory.id
     );
 };
 
@@ -48,7 +49,7 @@ export const getSearchedQuiz = (
 };
 
 
-export const getScore = (state: typeof initialQuizState, action): number => {
+export const getScore = (state: InitialQuizState, action): number => {
     if (action.payload.answer.isCorrect) {
         if (state.currentQuiz !== null) {
             return (

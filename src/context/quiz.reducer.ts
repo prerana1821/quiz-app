@@ -1,10 +1,10 @@
 import { getScore } from "../utils/utlis";
 import { initialQuizState } from "./QuizProvider";
-import { ACTIONQUIZTYPE, InitialQuizState } from "./quiz.reducer.types";
+import { QuizAction, InitialQuizState } from "./quiz.reducer.types";
 
 export const quizReducer = (
     state: InitialQuizState,
-    action: ACTIONQUIZTYPE
+    action: QuizAction
 ): InitialQuizState => {
     switch (action.type) {
         case "SET_QUIZ":
@@ -21,7 +21,7 @@ export const quizReducer = (
                     return state;
                 }
             }
-        case "CATEGORY_QUIZZES":
+        case "FILTER_CATEGORY_QUIZZES":
             return {
                 ...state,
                 viewByCategory: action.payload.category,
@@ -31,7 +31,7 @@ export const quizReducer = (
                 ...state,
                 searchString: action.payload.searchString,
             };
-        case "CURRENT_QUESTION":
+        case "SET_CURRENT_QUESTION":
             return {
                 ...state,
                 showAnswer: false,
@@ -54,6 +54,6 @@ export const quizReducer = (
         case "QUIT_QUIZ":
             return initialQuizState;
         default:
-            return state;
+            throw new Error();
     }
 };

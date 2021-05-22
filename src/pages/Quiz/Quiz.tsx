@@ -125,7 +125,7 @@ export const QuizComp = () => {
               className='btn'
               onClick={() => {
                 quizDispatch({
-                  type: "CURRENT_QUESTION",
+                  type: "SET_CURRENT_QUESTION",
                   payload: { questionNo: currentQuestionNo },
                 });
               }}

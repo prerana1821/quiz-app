@@ -44,7 +44,7 @@ export const Home = () => {
                   <button
                     onClick={() =>
                       quizDispatch({
-                        type: "CATEGORY_QUIZZES",
+                        type: "FILTER_CATEGORY_QUIZZES",
                         payload: { category },
                       })
                     }

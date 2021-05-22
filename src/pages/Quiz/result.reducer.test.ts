@@ -1,11 +1,11 @@
-import { ACTIONRESULTTYPE, InitialResultState } from "../Result/Result.types";
+import { ResultAction, InitialResultState } from "../Result/Result.types";
 import { initialResultState } from "./Quiz";
 import { resultReducer } from "./result.reducer";
 
 describe('should test result reducer', () => {
     test('should check when user attempts question attemptedQuestions count should increase', () => {
 
-        const action: ACTIONRESULTTYPE = {
+        const action: ResultAction = {
             type: "ATTEMPTED_QUESTIONS",
             payload: {
                 questions: 1,
@@ -27,7 +27,7 @@ describe('should test result reducer', () => {
             wrongAnswers: 0,
         }
 
-        const action: ACTIONRESULTTYPE = {
+        const action: ResultAction = {
             type: "RIGHT_ANSWERS",
             payload: {
                 rightAnswers: 1,
@@ -50,7 +50,7 @@ describe('should test result reducer', () => {
             wrongAnswers: 0,
         }
 
-        const action: ACTIONRESULTTYPE = {
+        const action: ResultAction = {
             type: "WRONG_ANSWERS",
             payload: {
                 wrongAnswers: 1,
@@ -62,27 +62,6 @@ describe('should test result reducer', () => {
             attemptedQuestions: 2,
             rightAnswers: 1,
             wrongAnswers: 2,
-        });
-    });
-
-
-    test('should check default state', () => {
-
-        const resultState: InitialResultState = {
-            attemptedQuestions: 2,
-            rightAnswers: 1,
-            wrongAnswers: 0,
-        }
-
-        const action: ACTIONRESULTTYPE = {
-            type: ""
-        }
-
-        const state = resultReducer(resultState, action);
-        expect(state).toEqual({
-            attemptedQuestions: 2,
-            rightAnswers: 1,
-            wrongAnswers: 0,
         });
     });
 

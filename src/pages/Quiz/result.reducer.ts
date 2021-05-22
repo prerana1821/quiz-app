@@ -1,9 +1,9 @@
-import { ACTIONRESULTTYPE } from "../Result/Result.types";
+import { ResultAction } from "../Result/Result.types";
 import { initialResultState } from "./Quiz";
 
 export const resultReducer = (
     state: typeof initialResultState,
-    action: ACTIONRESULTTYPE
+    action: ResultAction
 ) => {
     switch (action.type) {
         case "ATTEMPTED_QUESTIONS":
@@ -13,6 +13,6 @@ export const resultReducer = (
         case "WRONG_ANSWERS":
             return { ...state, wrongAnswers: action.payload.wrongAnswers + 1 };
         default:
-            return state;
+            throw new Error();
     }
 };

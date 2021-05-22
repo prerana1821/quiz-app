@@ -4,7 +4,7 @@ export type InitialResultState = {
     wrongAnswers: number;
 };
 
-export type ACTIONRESULTTYPE =
+export type ResultAction =
     | { type: "ATTEMPTED_QUESTIONS"; payload: { questions: number } }
     | { type: "RIGHT_ANSWERS"; payload: { rightAnswers: number } }
     | {

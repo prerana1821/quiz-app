@@ -1,9 +1,8 @@
 
-import { ACTIONQUIZTYPE, InitialQuizState } from "../context/quiz.reducer.types";
+import { QuizAction, InitialQuizState } from "../context/quiz.reducer.types";
 import { categoriesDB, quizzesDB } from "../database";
 import { Category } from "../database/quizDB.types";
 import { getCategoryName, getQuizzesByCatgeory, getScore, getSearchedQuiz } from "./utlis";
-// import { resultDispatch } from "../pages/Quiz/Quiz";
 jest.mock('../pages/Quiz/Quiz.tsx');
 
 
@@ -22,7 +21,7 @@ describe('should test utility function', () => {
             currentQuiz: quizzesDB[0],
         }
 
-        const action: ACTIONQUIZTYPE = {
+        const action: QuizAction = {
             type: "SET_SCORE",
             payload: {
                 answer: {

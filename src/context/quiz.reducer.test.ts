@@ -1,21 +1,26 @@
 import { categoriesDB, quizzesDB } from "../database";
 import { quizReducer } from "./quiz.reducer";
 import { initialQuizState } from "./QuizProvider";
-import { ACTIONQUIZTYPE, InitialQuizState } from "./quiz.reducer.types";
+import { QuizAction, InitialQuizState } from "./quiz.reducer.types";
 import { getScore } from "./../utils/utlis";
 import { Category } from "../database/quizDB.types";
 jest.mock('../utils/utlis.ts');
 
-describe('should test quiz reducer', () => {
+describe('testing quiz reducer', () => {
     test('should set quiz', () => {
 
-        const action: ACTIONQUIZTYPE = {
+        const action: QuizAction = {
             type: "SET_QUIZ",
             payload: { quizId: '1' }
         }
 
         const state = quizReducer(initialQuizState, action);
-        expect(state).toEqual({
+
+        // expect(state).toMatchObject({
+        //     currentQuiz: quizzesDB[0],
+        // })
+
+        expect(state).toEqual(expect.objectContaining({
             quizzes: quizzesDB,
             categories: categoriesDB,
             currentQuestionNo: 0,
@@ -24,26 +29,27 @@ describe('should test quiz reducer', () => {
             viewByCategory: {},
             showAnswer: false,
             searchString: "",
-            currentQuiz: quizzesDB[0],
-        });
+            currentQuiz: quizzesDB[0]
+        }));
     });
 
     test('should filter quiz by category', () => {
 
-        const action: ACTIONQUIZTYPE = {
-            type: "CATEGORY_QUIZZES",
+        const action: QuizAction = {
+            type: "FILTER_CATEGORY_QUIZZES",
             payload: {
                 category: {
                     id: '11',
                     name: 'Strokes',
                     noOfQuizzes: 1,
-                    thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-9fmmfI8WbHzdsod7tTy__b4OE_ifPQtAg&usqp=CAU',
+                    thumbnail: 'some url',
                     description: 'string',
                 }
             }
         }
 
         const state = quizReducer(initialQuizState, action);
+
         expect(state).toEqual({
             quizzes: quizzesDB,
             categories: categoriesDB,
@@ -55,7 +61,7 @@ describe('should test quiz reducer', () => {
                 id: '11',
                 name: 'Strokes',
                 noOfQuizzes: 1,
-                thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-9fmmfI8WbHzdsod7tTy__b4OE_ifPQtAg&usqp=CAU',
+                thumbnail: 'some url',
                 description: 'string',
             },
             showAnswer: false,
@@ -63,7 +69,7 @@ describe('should test quiz reducer', () => {
         });
     });
 
-    test('should set question no for selected quiz', () => {
+    test('should set question number for selected quiz', () => {
 
         const quizState: InitialQuizState = {
             quizzes: quizzesDB,
@@ -75,7 +81,7 @@ describe('should test quiz reducer', () => {
                 id: '11',
                 name: 'Strokes',
                 noOfQuizzes: 1,
-                thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-9fmmfI8WbHzdsod7tTy__b4OE_ifPQtAg&usqp=CAU',
+                thumbnail: 'some url',
                 description: 'string',
             },
             searchString: "",
@@ -83,23 +89,24 @@ describe('should test quiz reducer', () => {
             currentQuiz: quizzesDB[0],
         }
 
-        const action: ACTIONQUIZTYPE = {
-            type: "CURRENT_QUESTION",
-            payload: { questionNo: 1 }
+        const action: QuizAction = {
+            type: "SET_CURRENT_QUESTION",
+            payload: { questionNo: 0 }
         }
 
         const state = quizReducer(quizState, action);
+
         expect(state).toEqual({
             quizzes: quizzesDB,
             categories: categoriesDB,
-            currentQuestionNo: 2,
+            currentQuestionNo: 1,
             score: 0,
             seconds: 10,
             viewByCategory: {
                 id: '11',
                 name: 'Strokes',
                 noOfQuizzes: 1,
-                thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-9fmmfI8WbHzdsod7tTy__b4OE_ifPQtAg&usqp=CAU',
+                thumbnail: 'some url',
                 description: 'string',
             },
             searchString: "",
@@ -119,7 +126,7 @@ describe('should test quiz reducer', () => {
                 id: '11',
                 name: 'Strokes',
                 noOfQuizzes: 1,
-                thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-9fmmfI8WbHzdsod7tTy__b4OE_ifPQtAg&usqp=CAU',
+                thumbnail: 'some url',
                 description: 'string',
             },
             searchString: "",
@@ -127,12 +134,13 @@ describe('should test quiz reducer', () => {
             currentQuiz: quizzesDB[0],
         }
 
-        const action: ACTIONQUIZTYPE = {
+        const action: QuizAction = {
             type: "SET_SECONDS",
             payload: { seconds: 3 }
         }
 
         const state = quizReducer(quizState, action);
+
         expect(state).toEqual({
             quizzes: quizzesDB,
             categories: categoriesDB,
@@ -144,7 +152,7 @@ describe('should test quiz reducer', () => {
                 id: '11',
                 name: 'Strokes',
                 noOfQuizzes: 1,
-                thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-9fmmfI8WbHzdsod7tTy__b4OE_ifPQtAg&usqp=CAU',
+                thumbnail: 'some url',
                 description: 'string',
             },
             showAnswer: false,
@@ -163,7 +171,7 @@ describe('should test quiz reducer', () => {
                 id: '11',
                 name: 'Strokes',
                 noOfQuizzes: 1,
-                thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-9fmmfI8WbHzdsod7tTy__b4OE_ifPQtAg&usqp=CAU',
+                thumbnail: 'some url',
                 description: 'string',
             },
             searchString: "",
@@ -171,7 +179,7 @@ describe('should test quiz reducer', () => {
             currentQuiz: quizzesDB[0],
         }
 
-        const action: ACTIONQUIZTYPE = {
+        const action: QuizAction = {
             type: "SET_SECONDS",
             payload: { seconds: 'Time Out' }
         }
@@ -188,7 +196,7 @@ describe('should test quiz reducer', () => {
                 id: '11',
                 name: 'Strokes',
                 noOfQuizzes: 1,
-                thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-9fmmfI8WbHzdsod7tTy__b4OE_ifPQtAg&usqp=CAU',
+                thumbnail: 'some url',
                 description: 'string',
             },
             showAnswer: true,
@@ -210,7 +218,7 @@ describe('should test quiz reducer', () => {
             currentQuiz: null,
         }
 
-        const action: ACTIONQUIZTYPE = {
+        const action: QuizAction = {
             type: "SEARCH_QUIZ",
             payload: { searchString: "cha" }
         }
@@ -241,7 +249,7 @@ describe('should test quiz reducer', () => {
                 id: '11',
                 name: 'Strokes',
                 noOfQuizzes: 1,
-                thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-9fmmfI8WbHzdsod7tTy__b4OE_ifPQtAg&usqp=CAU',
+                thumbnail: 'some url',
                 description: 'string',
             },
             searchString: "",
@@ -249,7 +257,7 @@ describe('should test quiz reducer', () => {
             currentQuiz: quizzesDB[0],
         }
 
-        const action: ACTIONQUIZTYPE = {
+        const action: QuizAction = {
             type: "QUIT_QUIZ"
         }
 
@@ -280,14 +288,14 @@ describe('should test quiz reducer', () => {
                 id: '11',
                 name: 'Strokes',
                 noOfQuizzes: 1,
-                thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-9fmmfI8WbHzdsod7tTy__b4OE_ifPQtAg&usqp=CAU',
+                thumbnail: 'some url',
                 description: 'string',
             },
             showAnswer: false,
             currentQuiz: quizzesDB[0],
         }
 
-        const action: ACTIONQUIZTYPE = {
+        const action: QuizAction = {
             type: "SET_SCORE",
             payload: {
                 answer: {
@@ -313,7 +321,7 @@ describe('should test quiz reducer', () => {
                 id: '11',
                 name: 'Strokes',
                 noOfQuizzes: 1,
-                thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-9fmmfI8WbHzdsod7tTy__b4OE_ifPQtAg&usqp=CAU',
+                thumbnail: 'some url',
                 description: 'string',
             },
             searchString: "",
@@ -323,51 +331,5 @@ describe('should test quiz reducer', () => {
 
         expect(getScore).toBeCalledWith(quizState, action);
 
-    })
-
-
-    test('should check default state', () => {
-
-        const quizState: InitialQuizState = {
-            quizzes: quizzesDB,
-            categories: categoriesDB,
-            currentQuestionNo: 1,
-            score: 5,
-            seconds: 7,
-            viewByCategory: {
-                id: '11',
-                name: 'Strokes',
-                noOfQuizzes: 1,
-                thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-9fmmfI8WbHzdsod7tTy__b4OE_ifPQtAg&usqp=CAU',
-                description: 'string',
-            },
-            searchString: "",
-            showAnswer: false,
-            currentQuiz: quizzesDB[0],
-        }
-
-        const action: ACTIONQUIZTYPE = {
-            type: "Hello"
-        }
-
-        const state = quizReducer(quizState, action);
-
-        expect(state).toEqual({
-            quizzes: quizzesDB,
-            categories: categoriesDB,
-            currentQuestionNo: 1,
-            score: 5,
-            seconds: 7,
-            searchString: "",
-            viewByCategory: {
-                id: '11',
-                name: 'Strokes',
-                noOfQuizzes: 1,
-                thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP-9fmmfI8WbHzdsod7tTy__b4OE_ifPQtAg&usqp=CAU',
-                description: 'string',
-            },
-            showAnswer: false,
-            currentQuiz: quizzesDB[0],
-        });
     })
 });

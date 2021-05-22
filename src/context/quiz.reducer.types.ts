@@ -2,7 +2,7 @@ import { Category, Options, Quiz } from "../database/quizDB.types";
 
 export type ContextInitialState = {
     quizzes: Quiz[];
-    quizDispatch: (action: ACTIONQUIZTYPE) => void;
+    quizDispatch: (action: QuizAction) => void;
     categories: Category[];
     searchedQuizzes: Quiz[];
     categoryQuizzes: Quiz[];
@@ -25,14 +25,14 @@ export type InitialQuizState = {
     currentQuiz: null | Quiz;
 };
 
-export type ACTIONQUIZTYPE =
+export type QuizAction =
     | { type: "SET_QUIZ"; payload: { quizId: string } }
-    | { type: "CURRENT_QUESTION"; payload: { questionNo: number } }
+    | { type: "SET_CURRENT_QUESTION"; payload: { questionNo: number } }
     | {
         type: "SET_SCORE";
         payload: { answer: Options; currentQuestionNo: number; score: number };
     }
     | { type: "SET_SECONDS"; payload: { seconds: number | string } }
     | { type: "SEARCH_QUIZ"; payload: { searchString: string } }
-    | { type: "CATEGORY_QUIZZES"; payload: { category: Category } }
+    | { type: "FILTER_CATEGORY_QUIZZES"; payload: { category: Category } }
     | { type: "QUIT_QUIZ" };
