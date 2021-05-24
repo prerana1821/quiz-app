@@ -1,10 +1,13 @@
 import { Routes, Route } from "react-router-dom";
 import { Header } from "./components";
+import { useTheme } from "./context";
 import { Home, Quizes, QuizComp, Result, Rules } from "./pages";
 
 function App() {
+  const { theme } = useTheme();
+
   return (
-    <div className='App'>
+    <div className='App' style={theme}>
       <Header />
       <div>
         <Routes>

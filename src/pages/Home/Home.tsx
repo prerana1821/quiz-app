@@ -1,21 +1,28 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { Footer } from "../../components";
-import { useQuiz } from "../../context";
-import QuizBanner from "./../../images/quiz-banner.jpg";
+import { useQuiz, useTheme } from "../../context";
+import QuizBanner from "./../../images/quiz-banner.png";
 import "./Home.css";
 
 export const Home = () => {
   const { categories, quizDispatch } = useQuiz();
+  const { theme } = useTheme();
+
+  console.log({ theme });
 
   return (
-    <div>
+    <div style={theme}>
       <div className='banner flex justify-center items-center md:mx-12 mx-8 my-4'>
         <h1 className='md:text-5xl text-4xl md:px-9'>
           Your interactive and fun way to learn swimming with tips and tricks.
           <br />
           <Link to='/quizes'>
-            <button className='btn pink my-3'>View Quizzes</button>
+            <button
+              className='btn pink my-3'
+              style={{ boxShadow: theme.primaryBoxShadow }}
+            >
+              View Quizzes
+            </button>
           </Link>
         </h1>
         <img className='w-full max-w-3xl' src={QuizBanner} alt='QuizBanner' />
@@ -25,6 +32,7 @@ export const Home = () => {
         {categories.map((category) => {
           return (
             <div
+              style={theme}
               key={category.id}
               className='w-full	max-w-sm bg-white shadow-lg rounded-2xl m-4'
             >

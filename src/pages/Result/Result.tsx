@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useQuiz } from "../../context";
+import { useQuiz, useTheme } from "../../context";
 import { useLocation } from "react-router-dom";
 import "./Result.css";
 // import { InitialResultState } from "../Quiz/Quiz";
@@ -9,6 +9,8 @@ export const Result = () => {
   const { score, currentQuiz } = useQuiz();
   const { state } = useLocation();
   console.log({ state });
+
+  const { theme } = useTheme();
 
   const totalScore = currentQuiz?.questions.reduce((acc, value): number => {
     return acc + value.points;
@@ -39,7 +41,12 @@ export const Result = () => {
         <p>Wrong Answers: </p>
       </div>
       <Link to='/quizes'>
-        <button className='btn pink'>Take New Quiz</button>
+        <button
+          style={{ boxShadow: theme.primaryBoxShadow }}
+          className='btn pink'
+        >
+          Take New Quiz
+        </button>
       </Link>
     </div>
   );

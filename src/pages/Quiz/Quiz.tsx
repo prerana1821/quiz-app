@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useQuiz } from "../../context";
+import { useQuiz, useTheme } from "../../context";
 import { useEffect, useReducer } from "react";
 import "./Quiz.css";
 import { InitialResultState } from "../Result/Result.types";
@@ -21,6 +21,8 @@ export const QuizComp = () => {
     quizDispatch,
     currentQuestionNo,
   } = useQuiz();
+
+  const { theme } = useTheme();
 
   useEffect(() => {
     let quizCounter;
@@ -69,6 +71,7 @@ export const QuizComp = () => {
                     <button
                       key={answer.text}
                       disabled={showAnswer}
+                      style={{ boxShadow: theme.primaryBoxShadow }}
                       className={
                         showAnswer
                           ? answer.isCorrect
@@ -105,6 +108,7 @@ export const QuizComp = () => {
         <div className='flex justify-between'>
           <Link to='/quizes'>
             <button
+              style={{ boxShadow: theme.primaryBoxShadow }}
               onClick={() => {
                 quizDispatch({ type: "QUIT_QUIZ" });
               }}
@@ -118,11 +122,17 @@ export const QuizComp = () => {
               to='/result'
               state={{ resultState, questions: currentQuiz?.questions.length }}
             >
-              <button className='btn'>Stop</button>
+              <button
+                className='btn'
+                style={{ boxShadow: theme.primaryBoxShadow }}
+              >
+                Stop
+              </button>
             </Link>
           ) : (
             <button
               className='btn'
+              style={{ boxShadow: theme.primaryBoxShadow }}
               onClick={() => {
                 quizDispatch({
                   type: "SET_CURRENT_QUESTION",

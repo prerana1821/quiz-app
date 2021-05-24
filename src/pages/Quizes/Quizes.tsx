@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { SearchQuiz } from "../../components";
-import { useQuiz } from "../../context";
+import { useQuiz, useTheme } from "../../context";
 import { getCategoryName } from "../../utils/utlis";
 
 export const Quizes = () => {
   const { searchedQuizzes, categories } = useQuiz();
+  const { theme } = useTheme();
 
   return (
     <>
@@ -16,6 +17,7 @@ export const Quizes = () => {
         {searchedQuizzes.map((quiz) => {
           return (
             <div
+              style={theme}
               key={quiz.id}
               className='w-full	max-w-sm	bg-white shadow-lg rounded-2xl m-4'
             >

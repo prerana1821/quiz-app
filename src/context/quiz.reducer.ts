@@ -15,6 +15,9 @@ export const quizReducer = (
                 if (quiz) {
                     return {
                         ...state,
+                        currentQuestionNo: 0,
+                        score: 0,
+                        seconds: 10,
                         currentQuiz: quiz,
                     };
                 } else {

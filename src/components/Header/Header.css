@@ -9,7 +9,6 @@
   z-index: 4;
   position: sticky;
   padding: 1rem 2rem;
-  background-color: var(--white-color);
   box-shadow: 0 0 10px 4px rgb(0 0 0 / 5%);
 }
 
@@ -26,12 +25,22 @@
 
 .bar {
   display: block;
+  background: black;
   width: 25px;
   height: 3px;
   margin: 5px auto;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-  background-color: #101010;
+}
+
+.light {
+  width: 40px;
+  height: 34px;
+}
+
+.dark {
+  width: 33px;
+  height: 30px;
 }
 
 .nav-menu {
