@@ -9,6 +9,7 @@
   z-index: 4;
   position: sticky;
   padding: 1rem 2rem;
+  background-color: #fff;
   box-shadow: 0 0 10px 4px rgb(0 0 0 / 5%);
 }
 
