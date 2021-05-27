@@ -1,4 +1,4 @@
-import { useTheme } from "../../context";
+import { useAuth, useTheme } from "../../context";
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import "./Header.css";
@@ -9,6 +9,7 @@ export const Header = () => {
   const [toggle, setToggle] = useState(true);
   const { theme, changeTheme } = useTheme();
   const [toggleTheme, setToggleTheme] = useState<boolean>(true);
+  const { token } = useAuth();
 
   return (
     <header className='header' style={theme}>
@@ -53,9 +54,9 @@ export const Header = () => {
               activeStyle={{
                 color: "var(--dk-pink)",
               }}
-              to='/login'
+              to={token ? "/account" : "/login"}
             >
-              Login
+              {token ? "Account" : "Login"}
             </NavLink>
           </li>
           <li
