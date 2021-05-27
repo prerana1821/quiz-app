@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
-import { NavigateFunction, useNavigate } from "react-router";
+import { NavigateFunction, useLocation, useNavigate } from "react-router";
 import {
   LoginResponse,
   InitialAuthState,
@@ -71,6 +71,7 @@ export const setupAuthExceptionHandler = (
 };
 
 export const AuthProvider = ({ children }) => {
+  const { state } = useLocation() as any;
   let savedToken = localStorageHasItem("token");
   if (savedToken) {
     savedToken = JSON.parse(savedToken);
@@ -124,12 +125,19 @@ export const AuthProvider = ({ children }) => {
         setStatus({
           success: `Login Successful. Welcome ${username}!`,
         } as Status);
+        navigate(state?.from ? state.from : "/");
       }
     } catch (error) {
+      console.log(error.response);
       if (axios.isAxiosError(error)) {
         const serverError = error as AxiosError<ServerError>;
         if (serverError && serverError.response) {
-          return setStatus({ error: serverError.response.data } as Status);
+          return setStatus({
+            error: {
+              errorMessage: serverError.response.data.errorMessage,
+              errorCode: serverError.response.data.errorCode,
+            },
+          } as Status);
         }
       }
       console.log(error.response);
@@ -165,12 +173,19 @@ export const AuthProvider = ({ children }) => {
         setStatus({
           success: `Sign In Successful. Welcome ${username}!`,
         } as Status);
+        navigate(state?.from ? state.from : "/");
       }
     } catch (error) {
+      console.log(error.response);
       if (axios.isAxiosError(error)) {
         const serverError = error as AxiosError<ServerError>;
         if (serverError && serverError.response) {
-          return setStatus({ error: serverError.response.data } as Status);
+          return setStatus({
+            error: {
+              errorMessage: serverError.response.data.errorMessage,
+              errorCode: serverError.response.data.errorCode,
+            },
+          } as Status);
         }
       }
       console.log(error.response);

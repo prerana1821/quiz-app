@@ -1,27 +1,30 @@
-import { useLocation, useNavigate } from "react-router";
 import { useAuth } from "./../../context";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Loading from "./../../images/loading.svg";
 import "./Login.css";
 
 export const Login = () => {
   const { status, loginUserWithCredentials } = useAuth();
-  const { state } = useLocation();
-  const navigate = useNavigate();
   const [loginCredentials, setLoginCredentials] = useState({
     username: "",
     password: "",
     showPassword: false,
+    msg: "",
   });
 
   const loginHandler = async () => {
-    const result = await loginUserWithCredentials(
-      loginCredentials.username,
-      loginCredentials.password
-    );
-    // if (result) {
-    //   navigate(state?.from ? state.from : "/");
-    // }
+    if (loginCredentials.username && loginCredentials.password) {
+      await loginUserWithCredentials(
+        loginCredentials.username,
+        loginCredentials.password
+      );
+    } else {
+      setLoginCredentials({
+        ...loginCredentials,
+        msg: "Username is required & Password is required",
+      });
+    }
   };
 
   return (
@@ -36,6 +39,7 @@ export const Login = () => {
           onChange={(e) =>
             setLoginCredentials(() => ({
               ...loginCredentials,
+              msg: "",
               username: e.target.value,
             }))
           }
@@ -54,6 +58,7 @@ export const Login = () => {
           onChange={(e) =>
             setLoginCredentials(() => ({
               ...loginCredentials,
+              msg: "",
               password: e.target.value,
             }))
           }
@@ -78,8 +83,11 @@ export const Login = () => {
         </button>
       </div>
       <h3>
-        {/* {status && <img className='loading' src={Loading} alt={Loading} />} */}
+        {status.loading && (
+          <img className='loading' src={Loading} alt='Loading' />
+        )}
       </h3>
+      <p>{loginCredentials.msg}</p>
       <button className='btn btn-main' onClick={loginHandler}>
         Login
       </button>

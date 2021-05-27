@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import Loading from "./../../images/loading.svg";
 import { ServerError, useQuiz } from "../../context";
 import { Quiz } from "../../database";
 import { getCategoryName } from "../../utils/utlis";
@@ -7,7 +8,7 @@ import { getCategoryName } from "../../utils/utlis";
 export const Rules = () => {
   const { quizId } = useParams();
   const navigate = useNavigate();
-  const { quizzes, categories, quizDispatch } = useQuiz();
+  const { quizzes, status, categories, quizDispatch } = useQuiz();
 
   console.log({ quizId });
 
@@ -19,11 +20,19 @@ export const Rules = () => {
 
   const getSelectedQuiz = async () => {
     try {
+      quizDispatch({
+        type: "SET_STATUS",
+        payload: { status: { loading: "Loading data from server..." } },
+      });
       const response = await axios.get<{ quiz: Quiz }>(
         `https://api-quizzel.prerananawar1.repl.co/quizzes/${quizId}`
       );
       console.log({ response });
       if (response.status === 200) {
+        quizDispatch({
+          type: "SET_STATUS",
+          payload: { status: { loading: "" } },
+        });
         quizDispatch({
           type: "SET_QUIZ",
           payload: { quiz: response.data.quiz },
@@ -65,6 +74,9 @@ export const Rules = () => {
   return (
     <div>
       <section className='shadow-xl rounded-2xl m-5 md:w-max p-6 flex justify-center flex-col m-auto'>
+        {status.loading && (
+          <img className='loading' src={Loading} alt='Loading' />
+        )}
         <h2 className='text-4xl'>Instructions</h2>
         <p>{getQuiz?.quizName}</p>
         <p>

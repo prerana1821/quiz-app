@@ -43,7 +43,10 @@ const getCategories = async (): Promise<Category[] | ServerError> => {
       }
     }
     console.log(error);
-    return { errorMessage: "Something went wrong", errorCode: 403 };
+    return {
+      errorMessage: "Something went wrong, Try Again!!",
+      errorCode: 403,
+    };
   }
 };
 
@@ -65,7 +68,10 @@ const getQuizzes = async (): Promise<Quiz[] | ServerError> => {
       }
     }
     console.log(error);
-    return { errorMessage: "Something went wrong", errorCode: 403 };
+    return {
+      errorMessage: "Something went wrong, Try Again!!",
+      errorCode: 403,
+    };
   }
 };
 
@@ -78,6 +84,10 @@ export const QuizProvider = ({ children }) => {
       });
       const categories = await getCategories();
       if (Array.isArray(categories)) {
+        quizDispatch({
+          type: "SET_STATUS",
+          payload: { status: { loading: "" } },
+        });
         return quizDispatch({
           type: "SET_CATEGORIES",
           payload: { data: categories },
@@ -98,6 +108,10 @@ export const QuizProvider = ({ children }) => {
       });
       const quizzes = await getQuizzes();
       if (Array.isArray(quizzes)) {
+        quizDispatch({
+          type: "SET_STATUS",
+          payload: { status: { loading: "" } },
+        });
         return quizDispatch({
           type: "SET_QUIZZES",
           payload: { data: quizzes },

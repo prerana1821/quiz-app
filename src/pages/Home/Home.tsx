@@ -1,14 +1,13 @@
 import { Link } from "react-router-dom";
 import { Footer } from "../../components";
 import { useQuiz, useTheme } from "../../context";
+import Loading from "./../../images/loading.svg";
 import QuizBanner from "./../../images/quiz-banner.png";
 import "./Home.css";
 
 export const Home = () => {
-  const { categories, quizDispatch } = useQuiz();
+  const { categories, quizDispatch, status } = useQuiz();
   const { theme } = useTheme();
-
-  console.log({ theme });
 
   return (
     <div style={theme}>
@@ -28,6 +27,9 @@ export const Home = () => {
         </h1>
         <img className='w-full max-w-3xl' src={QuizBanner} alt='QuizBanner' />
       </div>
+      {status.loading && (
+        <img className='loading' src={Loading} alt='Loading' />
+      )}
       <h1 className='text-4xl text-center'>Categories</h1>
       <div className='flex flex-wrap justify-center gap-12'>
         {categories?.map((category) => {

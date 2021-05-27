@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-import { Header, PrivateRoute } from "./components";
-import { useTheme } from "./context";
+import { Header, PrivateRoute, Toast } from "./components";
+import { useAuth, useQuiz, useTheme } from "./context";
 import {
   Home,
   Quizes,
@@ -14,6 +14,11 @@ import {
 
 function App() {
   const { theme } = useTheme();
+  const { status } = useAuth();
+  const { status: quizStatus } = useQuiz();
+
+  console.log({ status });
+  console.log({ quizStatus });
 
   return (
     <div className='App' style={theme}>
@@ -35,6 +40,15 @@ function App() {
           ></PrivateRoute>
           <PrivateRoute path='/result' element={<Result />}></PrivateRoute>
         </Routes>
+        {(status.success ||
+          status.error?.errorMessage ||
+          quizStatus.error?.errorMessage) && (
+          <Toast
+            statusSuccess={status.success}
+            quizStatusError={quizStatus.error?.errorMessage}
+            statusError={status.error?.errorMessage}
+          />
+        )}
       </div>
     </div>
   );

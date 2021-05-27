@@ -1,13 +1,11 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { useQuiz, useTheme } from "../../context";
 import { useLocation } from "react-router-dom";
 import "./Result.css";
-// import { InitialResultState } from "../Quiz/Quiz";
 
 export const Result = () => {
   const { score, currentQuiz, quizDispatch } = useQuiz();
-  const { state } = useLocation();
+  const { state } = useLocation() as any;
   console.log({ state });
 
   const { theme } = useTheme();
@@ -28,17 +26,11 @@ export const Result = () => {
         </p>
       </div>
       <h3 className='text-2xl p-6'>You have earned 500 coins</h3>
-      <div>
-        {/* <p>Attempted Questions: {state.resultState.attemptedQuestions}</p>
+      <div className='shadow-lg rounded-lg p-8 mt-4	m-8'>
+        <p>Attempted Questions: {state.resultState.attemptedQuestions}</p>
         <p>Total Questions: {state.questions}</p>
         <p>Right Answers: {state.resultState.rightAnswers}</p>
-        <p>Wrong Answers: {state.resultState.wrongAnswers}</p> */}
-      </div>
-      <div className='shadow-lg rounded-lg p-8 mt-4	m-8'>
-        <p>Attempted Questions: </p>
-        <p>Total Questions: </p>
-        <p>Right Answers: </p>
-        <p>Wrong Answers: </p>
+        <p>Wrong Answers: {state.resultState.wrongAnswers}</p>
       </div>
       <Link to='/quizzes'>
         <button
