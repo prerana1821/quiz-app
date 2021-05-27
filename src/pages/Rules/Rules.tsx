@@ -47,7 +47,7 @@ export const Rules = () => {
           You get <span className='pink-txt'>30 seconds</span> to answer each
           question.
         </p>
-        <Link to={`/quizes/${quizId}`}>
+        <Link to={`/quizzes/${quizId}`}>
           <button
             onClick={() =>
               quizDispatch({

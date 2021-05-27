@@ -1,6 +1,7 @@
 import { getScore } from "../utils/utlis";
 import { initialQuizState } from "./QuizProvider";
 import { QuizAction, InitialQuizState } from "./quiz.reducer.types";
+import { Category } from "../database/quizDB.types";
 
 export const quizReducer = (
     state: InitialQuizState,
@@ -28,6 +29,11 @@ export const quizReducer = (
             return {
                 ...state,
                 viewByCategory: action.payload.category,
+            };
+        case "CLEAR_CATEGORY_QUIZZES":
+            return {
+                ...state,
+                viewByCategory: {} as Category,
             };
         case "SEARCH_QUIZ":
             return {

@@ -16,8 +16,9 @@ export const Home = () => {
         <h1 className='md:text-5xl text-4xl md:px-9'>
           Your interactive and fun way to learn swimming with tips and tricks.
           <br />
-          <Link to='/quizes'>
+          <Link to='/quizzes'>
             <button
+              onClick={() => quizDispatch({ type: "CLEAR_CATEGORY_QUIZZES" })}
               className='btn pink my-3'
               style={{ boxShadow: theme.primaryBoxShadow }}
             >
@@ -48,7 +49,7 @@ export const Home = () => {
                     Quizzes: {category.noOfQuizzes}
                   </p>
                 </div>
-                <Link to={`/quizes`}>
+                <Link to={`/quizzes`}>
                   <button
                     onClick={() =>
                       quizDispatch({

@@ -106,11 +106,12 @@ export const QuizComp = () => {
           </div>
         </div>
         <div className='flex justify-between'>
-          <Link to='/quizes'>
+          <Link to='/quizzes'>
             <button
               style={{ boxShadow: theme.primaryBoxShadow }}
               onClick={() => {
                 quizDispatch({ type: "QUIT_QUIZ" });
+                quizDispatch({ type: "CLEAR_CATEGORY_QUIZZES" });
               }}
               className='btn'
             >

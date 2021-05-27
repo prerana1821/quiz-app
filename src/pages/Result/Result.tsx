@@ -6,7 +6,7 @@ import "./Result.css";
 // import { InitialResultState } from "../Quiz/Quiz";
 
 export const Result = () => {
-  const { score, currentQuiz } = useQuiz();
+  const { score, currentQuiz, quizDispatch } = useQuiz();
   const { state } = useLocation();
   console.log({ state });
 
@@ -40,8 +40,9 @@ export const Result = () => {
         <p>Right Answers: </p>
         <p>Wrong Answers: </p>
       </div>
-      <Link to='/quizes'>
+      <Link to='/quizzes'>
         <button
+          onClick={() => quizDispatch({ type: "CLEAR_CATEGORY_QUIZZES" })}
           style={{ boxShadow: theme.primaryBoxShadow }}
           className='btn pink'
         >

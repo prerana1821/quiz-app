@@ -42,7 +42,7 @@ export const Header = () => {
               activeStyle={{
                 color: "var(--dk-pink)",
               }}
-              to='/quizes'
+              to='/my-activity'
             >
               My Activity
             </NavLink>
@@ -53,7 +53,7 @@ export const Header = () => {
               activeStyle={{
                 color: "var(--dk-pink)",
               }}
-              to='/quizes'
+              to='/login'
             >
               Login
             </NavLink>
