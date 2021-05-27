@@ -30,11 +30,11 @@ export const Home = () => {
       </div>
       <h1 className='text-4xl text-center'>Categories</h1>
       <div className='flex flex-wrap justify-center gap-12'>
-        {categories.map((category) => {
+        {categories?.map((category) => {
           return (
             <div
               style={theme}
-              key={category.id}
+              key={category._id}
               className='w-full	max-w-sm bg-white shadow-lg rounded-2xl m-4'
             >
               <img

@@ -3,9 +3,9 @@ import { Quiz } from "./quizDB.types";
 
 export const quizzesDB: Quiz[] = [
     {
-        id: '1',
+        _id: '1',
         quizName: "Swimming Strokes",
-        categoryId: "11",
+        categoryId: { _id: "11", name: "Strokes" },
         level: "Easy",
         thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsbSeDQkqki12JMfNZ5BS6yCUNV4__TJxXKw&usqp=CAU",
         highScore: [
@@ -76,9 +76,9 @@ export const quizzesDB: Quiz[] = [
         ],
     },
     {
-        id: v4(),
+        _id: v4(),
         quizName: "Championships",
-        categoryId: "12",
+        categoryId: { _id: "12", name: "People" },
         level: "Hard",
         thumbnail: "https://i.guim.co.uk/img/media/b339572204f03729bbdd7c34133b4ebfd21e27d1/0_110_5216_3129/master/5216.jpg?width=700&quality=85&auto=format&fit=max&s=ec04b357793f146b7a2c57d80abcbbac",
         highScore: [

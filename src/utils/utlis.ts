@@ -4,7 +4,7 @@ import { Category } from "../database/quizDB.types";
 import { InitialResultState } from "../reducer/Result/Result.types";
 
 export const getCategoryName = (categoryId: string, categories: Category[]): string | undefined => {
-    const cat = categories.find((category) => category.id === categoryId);
+    const cat = categories.find((category) => category._id === categoryId);
     return cat ? cat.name : undefined;
 };
 
@@ -31,7 +31,7 @@ export const getQuizzesByCatgeory = (
 ): Quiz[] => {
     console.log({ quizzes, viewByCategory });
     return quizzes.filter((quiz) =>
-        (Object.keys(viewByCategory).length === 0 && viewByCategory.constructor === Object) ? quiz : quiz.categoryId === viewByCategory.id
+        (Object.keys(viewByCategory).length === 0 && viewByCategory.constructor === Object) ? quiz : quiz.categoryId._id === viewByCategory._id
     );
 };
 
@@ -51,7 +51,7 @@ export const getSearchedQuiz = (
 
 export const getScore = (state: InitialQuizState, action): number => {
     if (action.payload.answer.isCorrect) {
-        if (state.currentQuiz !== null) {
+        if (state.currentQuiz !== null && state.currentQuiz.questions) {
             return (
                 state.currentQuiz.questions[action.payload.currentQuestionNo].points +
                 state.score
@@ -60,7 +60,7 @@ export const getScore = (state: InitialQuizState, action): number => {
             return state.score;
         }
     } else {
-        if (state.currentQuiz !== null) {
+        if (state.currentQuiz !== null && state.currentQuiz.questions) {
             const question =
                 state.currentQuiz.questions[action.payload.currentQuestionNo];
             return question.negativePoints

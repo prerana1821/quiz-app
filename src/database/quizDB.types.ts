@@ -16,17 +16,20 @@ export type UserScore = {
 }
 
 export type Quiz = {
-    id: string;
+    _id: string;
     quizName: string;
-    categoryId: string;
+    categoryId: {
+        _id: string;
+        name: string;
+    };
     level: string;
     thumbnail: string;
-    questions: Questions[]
-    highScore: UserScore[]
+    questions?: Questions[]
+    highScore?: UserScore[]
 }
 
 export type Category = {
-    id: string;
+    _id: string;
     name: string;
     noOfQuizzes: number;
     thumbnail: string;

@@ -18,7 +18,7 @@ export const Quizes = () => {
           return (
             <div
               style={theme}
-              key={quiz.id}
+              key={quiz._id}
               className='w-full	max-w-sm	bg-white shadow-lg rounded-2xl m-4'
             >
               <img
@@ -30,10 +30,12 @@ export const Quizes = () => {
                 <div>
                   <h2 className='text-2xl text-left p-0'>{quiz.quizName}</h2>
                   <p className='text-xl text-left'>
-                    Category: {getCategoryName(quiz.categoryId, categories)}
+                    Category:{" "}
+                    {categories &&
+                      getCategoryName(quiz.categoryId._id, categories)}
                   </p>
                 </div>
-                <Link to={`/rules/${quiz.id}`}>
+                <Link to={`/rules/${quiz._id}`}>
                   <button className='text-white font-bold py-3.5 px-3 rounded-lg text-lg pink'>
                     Take Quiz
                   </button>

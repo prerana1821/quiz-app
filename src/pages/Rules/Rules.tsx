@@ -1,17 +1,66 @@
-import React from "react";
-import { Link, useParams } from "react-router-dom";
-import { useQuiz } from "../../context";
+import axios, { AxiosError } from "axios";
+import { useNavigate, useParams } from "react-router-dom";
+import { ServerError, useQuiz } from "../../context";
+import { Quiz } from "../../database";
 import { getCategoryName } from "../../utils/utlis";
 
 export const Rules = () => {
   const { quizId } = useParams();
+  const navigate = useNavigate();
   const { quizzes, categories, quizDispatch } = useQuiz();
 
   console.log({ quizId });
 
   const getQuiz = quizzes.find((item) => {
-    return item.id === quizId;
+    return item._id === quizId;
   });
+
+  console.log({ getQuiz });
+
+  const getSelectedQuiz = async () => {
+    try {
+      const response = await axios.get<{ quiz: Quiz }>(
+        `https://api-quizzel.prerananawar1.repl.co/quizzes/${quizId}`
+      );
+      console.log({ response });
+      if (response.status === 200) {
+        quizDispatch({
+          type: "SET_QUIZ",
+          payload: { quiz: response.data.quiz },
+        });
+        navigate(`/quizzes/${quizId}`);
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const serverError = error as AxiosError<ServerError>;
+        if (serverError && serverError.response) {
+          return quizDispatch({
+            type: "SET_STATUS",
+            payload: {
+              status: {
+                error: {
+                  errorMessage: serverError.response.data.errorMessage,
+                  errorCode: serverError.response.data.errorCode,
+                },
+              },
+            },
+          });
+        }
+      }
+      console.log(error.response);
+      quizDispatch({
+        type: "SET_STATUS",
+        payload: {
+          status: {
+            error: {
+              errorMessage: "Something went wrong",
+              errorCode: 403,
+            },
+          },
+        },
+      });
+    }
+  };
 
   return (
     <div>
@@ -22,7 +71,7 @@ export const Rules = () => {
           Category:
           <span className='pink-txt'>
             {" "}
-            {getCategoryName(getQuiz!.categoryId, categories)}
+            {categories && getCategoryName(getQuiz!.categoryId._id, categories)}
           </span>
         </p>
         <p>
@@ -33,7 +82,7 @@ export const Rules = () => {
           There are a total of
           <span className='pink-txt'>
             {" "}
-            {getQuiz?.questions.length} questions
+            {getQuiz?.questions?.length} questions
           </span>
         </p>
         <p>
@@ -47,19 +96,14 @@ export const Rules = () => {
           You get <span className='pink-txt'>30 seconds</span> to answer each
           question.
         </p>
-        <Link to={`/quizzes/${quizId}`}>
-          <button
-            onClick={() =>
-              quizDispatch({
-                type: "SET_QUIZ",
-                payload: { quizId: quizId },
-              })
-            }
-            className='text-white font-bold py-3.5 px-3 rounded-lg text-lg pink'
-          >
-            Start Quiz
-          </button>
-        </Link>
+        <button
+          onClick={() => {
+            getSelectedQuiz();
+          }}
+          className='text-white font-bold py-3.5 px-3 rounded-lg text-lg pink'
+        >
+          Start Quiz
+        </button>
       </section>
     </div>
   );

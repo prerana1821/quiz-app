@@ -1,10 +1,11 @@
 import { Category, Quiz } from "../../database/quizDB.types";
 import { QuizAction } from "../../reducer/Quiz/quiz.reducer.types";
+import { Status } from "../utils.types";
 
 export type ContextInitialState = {
     quizzes: Quiz[];
     quizDispatch: (action: QuizAction) => void;
-    categories: Category[];
+    categories: Category[] | null;
     searchedQuizzes: Quiz[];
     categoryQuizzes: Quiz[];
     currentQuiz: null | Quiz;
@@ -12,4 +13,5 @@ export type ContextInitialState = {
     seconds: number | string;
     showAnswer: boolean;
     currentQuestionNo: number;
+    status: Status
 }

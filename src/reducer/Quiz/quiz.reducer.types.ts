@@ -1,8 +1,9 @@
+import { Status } from "../../context";
 import { Category, Options, Quiz } from "../../database/quizDB.types";
 
 export type InitialQuizState = {
     quizzes: Quiz[];
-    categories: Category[];
+    categories: Category[] | null;
     currentQuestionNo: number;
     score: number;
     seconds: number | string;
@@ -10,10 +11,14 @@ export type InitialQuizState = {
     viewByCategory: Category;
     searchString: string;
     currentQuiz: null | Quiz;
+    status: Status;
 };
 
 export type QuizAction =
-    | { type: "SET_QUIZ"; payload: { quizId: string } }
+    | { type: "SET_QUIZZES"; payload: { data: Quiz[] } }
+    | { type: "SET_CATEGORIES"; payload: { data: Category[] } }
+    | { type: "SET_QUIZ"; payload: { quiz: Quiz } }
+    | { type: "SET_STATUS"; payload: { status: Status } }
     | { type: "SET_CURRENT_QUESTION"; payload: { questionNo: number } }
     | {
         type: "SET_SCORE";

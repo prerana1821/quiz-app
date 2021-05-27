@@ -8,23 +8,30 @@ export const quizReducer = (
     action: QuizAction
 ): InitialQuizState => {
     switch (action.type) {
-        case "SET_QUIZ":
-            {
-                const quiz = state.quizzes.find(
-                    (quiz) => quiz.id === action.payload.quizId
-                )
-                if (quiz) {
-                    return {
-                        ...state,
-                        currentQuestionNo: 0,
-                        score: 0,
-                        seconds: 10,
-                        currentQuiz: quiz,
-                    };
-                } else {
-                    return state;
-                }
+        case "SET_QUIZZES":
+            return {
+                ...state,
+                quizzes: action.payload.data
             }
+        case "SET_CATEGORIES":
+            return {
+                ...state,
+                categories: action.payload.data
+            }
+        case "SET_STATUS":
+            return {
+                ...state,
+                status: action.payload.status
+            }
+        case "SET_QUIZ":
+            return {
+                ...state,
+                currentQuestionNo: 0,
+                score: 0,
+                seconds: 10,
+                currentQuiz: action.payload.quiz,
+            };
+
         case "FILTER_CATEGORY_QUIZZES":
             return {
                 ...state,
