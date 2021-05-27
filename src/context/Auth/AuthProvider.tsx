@@ -1,13 +1,20 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 import { NavigateFunction, useNavigate } from "react-router";
-import { InitialAuthState, Status, User } from "./auth.types";
+import {
+  LoginResponse,
+  InitialAuthState,
+  ServerError,
+  Status,
+  User,
+  SignupResponse,
+} from "./auth.types";
 
 export const AuthContext = createContext<InitialAuthState>(
   {} as InitialAuthState
 );
 
-export const localStorageHasItem = (key) => {
+export const localStorageHasItem = (key: string): string | null => {
   return localStorage.getItem(key) !== null ? localStorage.getItem(key) : null;
 };
 
@@ -20,23 +27,30 @@ export const setupAuthHeaderForServiceCalls = (
   delete axios.defaults.headers.common["Authorization"];
 };
 
-export const setupUser = ({ data: { user } }, setUser, setToken) => {
+export const setupUser = (
+  username: string,
+  id: string,
+  token: string,
+  email: string,
+  setUser,
+  setToken
+): void => {
   setUser({
-    _id: user._id,
-    username: user.username,
-    email: user.email,
+    _id: id,
+    username: username,
+    email: email,
   });
-  setToken(user.token);
-  localStorage?.setItem("token", JSON.stringify({ token: user.token }));
+  setToken(token);
+  localStorage?.setItem("token", JSON.stringify({ token: token }));
   localStorage?.setItem(
     "user",
     JSON.stringify({
-      _id: user._id,
-      username: user.username,
-      email: user.email,
+      _id: id,
+      username: username,
+      email: email,
     })
   );
-  setupAuthHeaderForServiceCalls(user.token);
+  setupAuthHeaderForServiceCalls(token);
 };
 
 export const setupAuthExceptionHandler = (
@@ -48,8 +62,8 @@ export const setupAuthExceptionHandler = (
     (response) => response,
     (error) => {
       if (error?.response?.status === UNAUTHORIZED) {
-        console.log("here");
         logoutUser();
+        console.log("here");
         navigate("login");
       }
       return Promise.reject(error);
@@ -71,7 +85,7 @@ export const AuthProvider = ({ children }) => {
   const [status, setStatus] = useState<Status>({
     loading: "",
     success: "",
-    error: "",
+    error: {} as ServerError,
   });
   const navigate = useNavigate();
 
@@ -85,7 +99,7 @@ export const AuthProvider = ({ children }) => {
   ) => {
     try {
       setStatus({ loading: "Wait! Checking..." } as Status);
-      const response = await axios.post(
+      const response = await axios.post<LoginResponse>(
         "https://api-quizzel.prerananawar1.repl.co/auth/login",
         {
           username,
@@ -94,35 +108,27 @@ export const AuthProvider = ({ children }) => {
       );
       console.log({ response });
       if (response.status === 200) {
-        // setUser({
-        //   _id: response.data.user._id,
-        //   username: response.data.user.username,
-        //   email: response.data.user.email,
-        // });
-        // setToken(response.data.user.token);
-        // localStorage?.setItem(
-        //   "token",
-        //   JSON.stringify({ token: response.data.user.token })
-        // );
-        // localStorage?.setItem(
-        //   "user",
-        //   JSON.stringify({
-        //     _id: response.data.user._id,
-        //     username: response.data.user.username,
-        //     email: response.data.user.email,
-        //   })
-        // );
-        // setupAuthHeaderForServiceCalls(response.data.user.token);
-        setupUser(response, setUser, setToken);
+        setupUser(
+          username,
+          response.data.user._id,
+          response.data.user.token,
+          response.data.user.email,
+          setUser,
+          setToken
+        );
         setStatus({
-          success: `Login Successful. Welcome ${response.data.user.username}!`,
+          success: `Login Successful. Welcome ${username}!`,
         } as Status);
       }
     } catch (error) {
-      console.log(error.response);
-      if (!error.success) {
-        setStatus({ error: error.response.data.message } as Status);
+      if (axios.isAxiosError(error)) {
+        const serverError = error as AxiosError<ServerError>;
+        if (serverError && serverError.response) {
+          return setStatus({ error: serverError.response.data } as Status);
+        }
       }
+      console.log(error.response);
+      setStatus({ error: error.response.data.message } as Status);
     }
   };
 
@@ -133,7 +139,7 @@ export const AuthProvider = ({ children }) => {
   ) => {
     try {
       setStatus({ loading: "Wait! Checking..." } as Status);
-      const response = await axios.post(
+      const response = await axios.post<SignupResponse>(
         "https://api-quizzel.prerananawar1.repl.co/auth/signup",
         {
           username,
@@ -143,22 +149,33 @@ export const AuthProvider = ({ children }) => {
       );
       console.log({ response });
       if (response.status === 201) {
-        setupUser(response, setUser, setToken);
+        setupUser(
+          username,
+          response.data.user._id,
+          response.data.user.token,
+          email,
+          setUser,
+          setToken
+        );
         setStatus({
-          success: `Sign In Successful. Welcome ${response.data.user.username}!`,
+          success: `Sign In Successful. Welcome ${username}!`,
         } as Status);
       }
     } catch (error) {
-      console.log(error.response);
-      if (!error.success) {
-        setStatus({ error: error.response.data.message } as Status);
+      if (axios.isAxiosError(error)) {
+        const serverError = error as AxiosError<ServerError>;
+        if (serverError && serverError.response) {
+          return setStatus({ error: serverError.response.data } as Status);
+        }
       }
+      console.log(error.response);
+      setStatus({ error: error.response.data.message } as Status);
     }
   };
 
   const logout = (): void => {
     setToken("");
-    setStatus({ loading: "", success: "", error: "" });
+    setStatus({ loading: "", success: "", error: {} as ServerError });
     setUser({
       _id: "",
       username: "",
