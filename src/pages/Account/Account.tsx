@@ -1,5 +1,4 @@
 import { useAuth } from "./../../context";
-import "./Account.css";
 
 export const Account = () => {
   const { user, logout } = useAuth();

@@ -1,4 +1,4 @@
-import { useAuth } from "./../../context";
+import { useAuth, useTheme } from "./../../context";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Loading from "./../../images/loading.svg";
@@ -6,6 +6,7 @@ import "./Login.css";
 
 export const Login = () => {
   const { status, loginUserWithCredentials } = useAuth();
+  const { theme } = useTheme();
   const [loginCredentials, setLoginCredentials] = useState({
     username: "",
     password: "",
@@ -13,7 +14,7 @@ export const Login = () => {
     msg: "",
   });
 
-  const loginHandler = async () => {
+  const loginHandler = async (): Promise<void> => {
     if (loginCredentials.username && loginCredentials.password) {
       await loginUserWithCredentials(
         loginCredentials.username,
@@ -28,12 +29,16 @@ export const Login = () => {
   };
 
   return (
-    <div className='login-form'>
+    <div className='login-form' style={theme}>
       <h2 className='text-3xl font-bold'>Login</h2>
       <div className='login-input'>
         <input
           type='text'
           className='input-txt-error'
+          style={{
+            boxShadow: theme.primaryBoxShadow,
+            backgroundColor: theme.backgroundColor,
+          }}
           required
           value={loginCredentials.username}
           onChange={(e) =>
@@ -53,6 +58,10 @@ export const Login = () => {
         <input
           className='input-txt-error'
           required
+          style={{
+            boxShadow: theme.primaryBoxShadow,
+            backgroundColor: theme.backgroundColor,
+          }}
           type={loginCredentials.showPassword ? "text" : "password"}
           value={loginCredentials.password}
           onChange={(e) =>

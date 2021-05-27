@@ -1,10 +1,11 @@
-import { useAuth } from "../../context";
+import { useAuth, useTheme } from "../../context";
 import { useState } from "react";
 import Loading from "./../../images/loading.svg";
 import { Link } from "react-router-dom";
 
 export const Signup = () => {
   const { status, signUpUserWithCredentials } = useAuth();
+  const { theme } = useTheme();
   const [signUpCredentials, setSignUpCredentials] = useState({
     email: "",
     username: "",
@@ -64,6 +65,10 @@ export const Signup = () => {
             type='email'
             className='input-txt-error'
             required
+            style={{
+              boxShadow: theme.primaryBoxShadow,
+              backgroundColor: theme.backgroundColor,
+            }}
             value={signUpCredentials.email}
             onChange={(e) =>
               setSignUpCredentials(() => ({
@@ -83,6 +88,10 @@ export const Signup = () => {
             type='text'
             className='input-txt-error'
             required
+            style={{
+              boxShadow: theme.primaryBoxShadow,
+              backgroundColor: theme.backgroundColor,
+            }}
             value={signUpCredentials.username}
             onChange={(e) =>
               setSignUpCredentials(() => ({
@@ -101,6 +110,10 @@ export const Signup = () => {
           <input
             className='input-txt-error'
             required
+            style={{
+              boxShadow: theme.primaryBoxShadow,
+              backgroundColor: theme.backgroundColor,
+            }}
             type={signUpCredentials.showPassword ? "text" : "password"}
             value={signUpCredentials.password}
             onChange={(e) =>
@@ -135,6 +148,10 @@ export const Signup = () => {
           <input
             className='input-txt-error'
             required
+            style={{
+              boxShadow: theme.primaryBoxShadow,
+              backgroundColor: theme.backgroundColor,
+            }}
             type={signUpCredentials.showConfirmPassword ? "text" : "password"}
             value={signUpCredentials.confirmPassword}
             onChange={(e) =>
