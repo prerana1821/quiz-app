@@ -1,3 +1,5 @@
+import { Status } from "../utils.types"
+
 export type InitialAuthState = {
     token: string | null,
     user: User,
@@ -13,12 +15,6 @@ export type User = {
     email: string;
 }
 
-export type Status = {
-    loading: string;
-    success: string;
-    error: ServerError;
-}
-
 export type LoginResponse = {
     user: {
         _id: string;
@@ -32,9 +28,4 @@ export type SignupResponse = {
         _id: string;
         token: string;
     }
-}
-
-export type ServerError = {
-    errorMessage: string;
-    errorCode: number;
 }

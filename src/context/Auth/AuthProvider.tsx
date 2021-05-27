@@ -4,11 +4,10 @@ import { NavigateFunction, useNavigate } from "react-router";
 import {
   LoginResponse,
   InitialAuthState,
-  ServerError,
-  Status,
   User,
   SignupResponse,
 } from "./auth.types";
+import { ServerError, Status } from "./../utils.types";
 
 export const AuthContext = createContext<InitialAuthState>(
   {} as InitialAuthState
@@ -90,6 +89,12 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const userFromLocalStorage = localStorageHasItem("user");
+    if (userFromLocalStorage) {
+      const userFromLocalStorageObj = JSON.parse(userFromLocalStorage);
+      setUser(userFromLocalStorageObj);
+    }
+
     setupAuthExceptionHandler(logout, navigate);
   }, []);
 

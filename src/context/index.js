@@ -4,3 +4,4 @@ export { ThemeContext, ThemeProvider, useTheme } from "./Theme/ThemeProvider";
 export { Theme, ThemeInitialState } from "./Theme/theme.types";
 export { AuthContext, AuthProvider, useAuth } from "./Auth/AuthProvider";
 export { InitialAuthStates } from "./Auth/auth.types";
+export { ServerError, Status } from "./utils.types";
