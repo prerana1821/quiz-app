@@ -26,13 +26,12 @@ export const setResult = (
 };
 
 export const getQuizzesByCatgeory = (
-    quizzes: Quiz[],
+    quizzes: Quiz[] | null,
     viewByCategory: Category
 ): Quiz[] => {
-    console.log({ quizzes, viewByCategory });
-    return quizzes.filter((quiz) =>
+    return quizzes ? quizzes.filter((quiz) =>
         (Object.keys(viewByCategory).length === 0 && viewByCategory.constructor === Object) ? quiz : quiz.categoryId._id === viewByCategory._id
-    );
+    ) : [];
 };
 
 export const getSearchedQuiz = (

@@ -12,7 +12,7 @@ export const Rules = () => {
 
   console.log({ quizId });
 
-  const getQuiz = quizzes.find((item) => {
+  const getQuiz = quizzes?.find((item) => {
     return item._id === quizId;
   });
 

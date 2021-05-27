@@ -8,49 +8,11 @@ import {
   SignupResponse,
 } from "./auth.types";
 import { ServerError, Status } from "./../utils.types";
+import { localStorageHasItem, setUpUser } from "./utils";
 
 export const AuthContext = createContext<InitialAuthState>(
   {} as InitialAuthState
 );
-
-export const localStorageHasItem = (key: string): string | null => {
-  return localStorage.getItem(key) !== null ? localStorage.getItem(key) : null;
-};
-
-export const setupAuthHeaderForServiceCalls = (
-  token: string
-): string | undefined => {
-  if (token) {
-    return (axios.defaults.headers.common["Authorization"] = token);
-  }
-  delete axios.defaults.headers.common["Authorization"];
-};
-
-export const setupUser = (
-  username: string,
-  id: string,
-  token: string,
-  email: string,
-  setUser,
-  setToken
-): void => {
-  setUser({
-    _id: id,
-    username: username,
-    email: email,
-  });
-  setToken(token);
-  localStorage?.setItem("token", JSON.stringify({ token: token }));
-  localStorage?.setItem(
-    "user",
-    JSON.stringify({
-      _id: id,
-      username: username,
-      email: email,
-    })
-  );
-  setupAuthHeaderForServiceCalls(token);
-};
 
 export const setupAuthExceptionHandler = (
   logoutUser: () => void,
@@ -114,7 +76,7 @@ export const AuthProvider = ({ children }) => {
       );
       console.log({ response });
       if (response.status === 200) {
-        setupUser(
+        setUpUser(
           username,
           response.data.user._id,
           response.data.user.token,
@@ -162,7 +124,7 @@ export const AuthProvider = ({ children }) => {
       );
       console.log({ response });
       if (response.status === 201) {
-        setupUser(
+        setUpUser(
           username,
           response.data.user._id,
           response.data.user.token,

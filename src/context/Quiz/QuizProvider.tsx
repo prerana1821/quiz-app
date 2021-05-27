@@ -1,19 +1,18 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
-import { quizzesDB, categoriesDB } from "../../database";
-import { Category, Quiz } from "../../database/quizDB.types";
+import { Category } from "../../database/quizDB.types";
 import { getQuizzesByCatgeory, getSearchedQuiz } from "../../utils/utlis";
 import { quizReducer } from "../../reducer/Quiz/quiz.reducer";
 import { InitialQuizState } from "../../reducer/Quiz/quiz.reducer.types";
 import { ContextInitialState } from "./quiz.types";
-import axios, { AxiosError } from "axios";
-import { ServerError, Status } from "../utils.types";
+import { Status } from "../utils.types";
+import { getCategories, getQuizzes } from "./utils";
 
 export const QuizContext = createContext<ContextInitialState>(
   {} as ContextInitialState
 );
 
 export const initialQuizState: InitialQuizState = {
-  quizzes: quizzesDB,
+  quizzes: null,
   categories: null,
   currentQuestionNo: 0,
   score: 0,
@@ -23,56 +22,6 @@ export const initialQuizState: InitialQuizState = {
   showAnswer: false,
   currentQuiz: null,
   status: {} as Status,
-};
-
-const getCategories = async (): Promise<Category[] | ServerError> => {
-  try {
-    const response = await axios.get<{ categories: Category[] }>(
-      "https://api-quizzel.prerananawar1.repl.co/categories"
-    );
-    console.log({ response });
-    return response.data.categories;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const serverError = error as AxiosError<ServerError>;
-      if (serverError && serverError.response) {
-        return {
-          errorMessage: serverError.response.data.errorMessage,
-          errorCode: serverError.response.status,
-        };
-      }
-    }
-    console.log(error);
-    return {
-      errorMessage: "Something went wrong, Try Again!!",
-      errorCode: 403,
-    };
-  }
-};
-
-const getQuizzes = async (): Promise<Quiz[] | ServerError> => {
-  try {
-    const response = await axios.get<{ quizzes: Quiz[] }>(
-      "https://api-quizzel.prerananawar1.repl.co/quizzes"
-    );
-    console.log({ response });
-    return response.data.quizzes;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const serverError = error as AxiosError<ServerError>;
-      if (serverError && serverError.response) {
-        return {
-          errorMessage: serverError.response.data.errorMessage,
-          errorCode: serverError.response.status,
-        };
-      }
-    }
-    console.log(error);
-    return {
-      errorMessage: "Something went wrong, Try Again!!",
-      errorCode: 403,
-    };
-  }
 };
 
 export const QuizProvider = ({ children }) => {

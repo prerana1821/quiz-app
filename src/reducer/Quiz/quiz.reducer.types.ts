@@ -2,7 +2,7 @@ import { Status } from "../../context";
 import { Category, Options, Quiz } from "../../database/quizDB.types";
 
 export type InitialQuizState = {
-    quizzes: Quiz[];
+    quizzes: Quiz[] | null;
     categories: Category[] | null;
     currentQuestionNo: number;
     score: number;

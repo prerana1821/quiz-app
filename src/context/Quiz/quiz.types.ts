@@ -3,7 +3,7 @@ import { QuizAction } from "../../reducer/Quiz/quiz.reducer.types";
 import { Status } from "../utils.types";
 
 export type ContextInitialState = {
-    quizzes: Quiz[];
+    quizzes: Quiz[] | null;
     quizDispatch: (action: QuizAction) => void;
     categories: Category[] | null;
     searchedQuizzes: Quiz[];
