@@ -1,5 +1,5 @@
-import { ResultAction } from "../Result/Result.types";
-import { initialResultState } from "./Quiz";
+import { ResultAction } from "./Result.types";
+import { initialResultState } from "../../pages/Quiz/Quiz";
 
 export const resultReducer = (
     state: typeof initialResultState,

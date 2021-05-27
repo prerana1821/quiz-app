@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import { useQuiz, useTheme } from "../../context";
 import { useEffect, useReducer } from "react";
 import "./Quiz.css";
-import { InitialResultState } from "../Result/Result.types";
-import { resultReducer } from "./result.reducer";
+import { InitialResultState } from "../../reducer/Result/Result.types";
+import { resultReducer } from "../../reducer/Result/result.reducer";
 import { setResult } from "../../utils/utlis";
 
 export const initialResultState: InitialResultState = {

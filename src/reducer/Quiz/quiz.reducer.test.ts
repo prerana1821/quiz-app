@@ -1,9 +1,9 @@
-import { categoriesDB, quizzesDB } from "../database";
+import { categoriesDB, quizzesDB } from "../../database";
 import { quizReducer } from "./quiz.reducer";
-import { initialQuizState } from "./QuizProvider";
+import { initialQuizState } from "../../context/Quiz/QuizProvider";
 import { QuizAction, InitialQuizState } from "./quiz.reducer.types";
-import { getScore } from "./../utils/utlis";
-import { Category } from "../database/quizDB.types";
+import { getScore } from "../../utils/utlis";
+import { Category } from "../../database/quizDB.types";
 jest.mock('../utils/utlis.ts');
 
 describe('testing quiz reducer', () => {

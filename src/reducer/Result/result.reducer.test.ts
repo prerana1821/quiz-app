@@ -1,9 +1,9 @@
-import { ResultAction, InitialResultState } from "../Result/Result.types";
-import { initialResultState } from "./Quiz";
+import { ResultAction, InitialResultState } from "./Result.types";
+import { initialResultState } from "../../pages/Quiz/Quiz";
 import { resultReducer } from "./result.reducer";
 
 describe('should test result reducer', () => {
-    test('should check when user attempts question attemptedQuestions count should increase', () => {
+    test('should check when user attempts question attempted questions count should increase', () => {
 
         const action: ResultAction = {
             type: "ATTEMPTED_QUESTIONS",
@@ -19,7 +19,7 @@ describe('should test result reducer', () => {
         });
     });
 
-    test('should increase rightAnswers count if user answers right', () => {
+    test('should increase right answers count if user answers right', () => {
 
         const resultState: InitialResultState = {
             attemptedQuestions: 2,

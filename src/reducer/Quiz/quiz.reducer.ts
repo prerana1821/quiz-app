@@ -1,7 +1,7 @@
-import { getScore } from "../utils/utlis";
-import { initialQuizState } from "./QuizProvider";
+import { getScore } from "../../utils/utlis";
+import { initialQuizState } from "../../context/Quiz/QuizProvider";
 import { QuizAction, InitialQuizState } from "./quiz.reducer.types";
-import { Category } from "../database/quizDB.types";
+import { Category } from "../../database/quizDB.types";
 
 export const quizReducer = (
     state: InitialQuizState,

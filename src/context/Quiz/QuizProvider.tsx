@@ -1,9 +1,10 @@
 import { createContext, useContext, useReducer } from "react";
-import { quizzesDB, categoriesDB } from "../database";
-import { Category } from "../database/quizDB.types";
-import { getQuizzesByCatgeory, getSearchedQuiz } from "../utils/utlis";
-import { quizReducer } from "./quiz.reducer";
-import { ContextInitialState, InitialQuizState } from "./quiz.reducer.types";
+import { quizzesDB, categoriesDB } from "../../database";
+import { Category } from "../../database/quizDB.types";
+import { getQuizzesByCatgeory, getSearchedQuiz } from "../../utils/utlis";
+import { quizReducer } from "../../reducer/Quiz/quiz.reducer";
+import { InitialQuizState } from "../../reducer/Quiz/quiz.reducer.types";
+import { ContextInitialState } from "./quiz.types";
 
 export const QuizContext = createContext<ContextInitialState>(
   {} as ContextInitialState

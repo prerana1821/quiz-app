@@ -1,10 +1,8 @@
-
-import { QuizAction, InitialQuizState } from "../context/quiz.reducer.types";
+import { QuizAction, InitialQuizState } from "../reducer/Quiz/quiz.reducer.types";
 import { categoriesDB, quizzesDB } from "../database";
 import { Category } from "../database/quizDB.types";
 import { getCategoryName, getQuizzesByCatgeory, getScore, getSearchedQuiz } from "./utlis";
 jest.mock('../pages/Quiz/Quiz.tsx');
-
 
 describe('should test utility function', () => {
     test('should calculate the score of user', () => {

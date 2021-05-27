@@ -1,7 +1,7 @@
-import { InitialQuizState } from "../context/quiz.reducer.types";
+import { InitialQuizState } from "../reducer/Quiz/quiz.reducer.types";
 import { Quiz } from "../database";
 import { Category } from "../database/quizDB.types";
-import { InitialResultState } from "../pages/Result/Result.types";
+import { InitialResultState } from "../reducer/Result/Result.types";
 
 export const getCategoryName = (categoryId: string, categories: Category[]): string | undefined => {
     const cat = categories.find((category) => category.id === categoryId);
