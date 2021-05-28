@@ -1,8 +1,7 @@
-import { ResultAction } from "./Result.types";
-import { initialResultState } from "../../pages/Quiz/Quiz";
+import { InitialResultState, ResultAction } from "./Result.types";
 
 export const resultReducer = (
-    state: typeof initialResultState,
+    state: InitialResultState,
     action: ResultAction
 ) => {
     switch (action.type) {

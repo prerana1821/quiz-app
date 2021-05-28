@@ -4,15 +4,18 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { AuthProvider, QuizProvider, ThemeProvider } from "./context";
 import App from "./App";
 import "./index.css";
+import { UserDetailProvider } from "./context/UserDetail/UserDetail";
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
       <ThemeProvider>
         <AuthProvider>
-          <QuizProvider>
-            <App />
-          </QuizProvider>
+          <UserDetailProvider>
+            <QuizProvider>
+              <App />
+            </QuizProvider>
+          </UserDetailProvider>
         </AuthProvider>
       </ThemeProvider>
     </Router>

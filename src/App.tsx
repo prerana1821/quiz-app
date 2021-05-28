@@ -17,9 +17,6 @@ function App() {
   const { status } = useAuth();
   const { status: quizStatus } = useQuiz();
 
-  console.log({ status });
-  console.log({ quizStatus });
-
   return (
     <div className='App' style={theme}>
       <Header />
