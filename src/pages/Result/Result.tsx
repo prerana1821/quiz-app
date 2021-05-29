@@ -25,7 +25,7 @@ export const Result = () => {
           <div className='text-8xl block'>{score}</div> out of {totalScore}
         </p>
       </div>
-      <h3 className='text-2xl p-6'>You have earned 500 coins</h3>
+      <h3 className='text-2xl p-6'>You have earned {state.coins} coins</h3>
       <div className='shadow-lg rounded-lg p-8 mt-4	m-8'>
         <p>Attempted Questions: {state.resultState.attemptedQuestions}</p>
         <p>Total Questions: {state.questions}</p>

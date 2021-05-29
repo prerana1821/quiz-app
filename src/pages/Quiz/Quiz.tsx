@@ -1,145 +1,24 @@
 import { Link, useNavigate } from "react-router-dom";
-import { ServerError, useQuiz, useTheme } from "../../context";
+import { useQuiz, useTheme } from "../../context";
 import { useEffect, useReducer } from "react";
-import "./Quiz.css";
 import Loading from "./../../images/loading.svg";
 import { InitialResultState } from "../../reducer/Result/Result.types";
 import { resultReducer } from "../../reducer/Result/result.reducer";
 import { setResult } from "../../utils/utlis";
-import axios, { AxiosError } from "axios";
-import { UserSolvedQuizzes } from "../../context/UserDetail/userDetails.types";
 import { useUserDetail } from "../../context/UserDetail/UserDetail";
+import { sendSolvedQuizzes, updateQuiz, getRandomIntInclusive } from "./utils";
+import "./Quiz.css";
+
+export const calculateTotalUserScore = (userDetailsState) => {
+  return userDetailsState.solvedQuizzes.reduce((acc, value) => {
+    return acc + value.score;
+  }, 0);
+};
 
 export const initialResultState: InitialResultState = {
   attemptedQuestions: 0,
   rightAnswers: 0,
   wrongAnswers: 0,
-};
-
-export const postSolvedQuizzes = async (
-  quizId: String | undefined,
-  score: number
-): Promise<UserSolvedQuizzes | ServerError | undefined> => {
-  try {
-    const response = await axios.post<{ solvedQuiz: UserSolvedQuizzes }>(
-      "https://api-quizzel.prerananawar1.repl.co/user-details/solved-quizzes",
-      { quizId, score }
-    );
-    console.log({ response });
-    if (response.status === 201) {
-      return response.data.solvedQuiz;
-    }
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const serverError = error as AxiosError<ServerError>;
-      if (serverError && serverError.response) {
-        return {
-          errorMessage: serverError.response.data.errorMessage,
-          errorCode: serverError.response.status,
-        };
-      }
-    }
-    console.log(error);
-    return {
-      errorMessage: "Something went wrong, Try Again!!",
-      errorCode: 403,
-    };
-  }
-};
-
-const sendSolvedQuizzes = async (
-  quizId,
-  score,
-  dispatch,
-  navigate,
-  resultState,
-  questions
-) => {
-  dispatch({
-    type: "SET_STATUS",
-    payload: { status: { loading: "Adding Score..." } },
-  });
-  const quiz = await postSolvedQuizzes(quizId, score);
-  if (quiz && "quizId" in quiz) {
-    dispatch({ type: "SET_STATUS", payload: { status: { loading: "" } } });
-    dispatch({ type: "SET_SCORE", payload: { solvedQuiz: quiz } });
-    navigate("/result", {
-      state: {
-        resultState,
-        questions,
-        quizId,
-      },
-    });
-  }
-  dispatch({
-    type: "SET_STATUS",
-    payload: { status: { error: quiz } },
-  });
-};
-
-export const postUpdatedScore = async (
-  quizId: string,
-  score: number
-): Promise<number | ServerError> => {
-  try {
-    console.log({ quizId });
-    const response = await axios.post(
-      `https://api-quizzel.prerananawar1.repl.co/user-details/solved-quizzes/${quizId}`,
-      {
-        score,
-      }
-    );
-    console.log({ response });
-    return response.status;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const serverError = error as AxiosError<ServerError>;
-      if (serverError && serverError.response) {
-        return {
-          errorMessage: serverError.response.data.errorMessage,
-          errorCode: serverError.response.status,
-        };
-      }
-    }
-    console.log(error);
-    return {
-      errorMessage: "Something went wrong, Try Again!!",
-      errorCode: 403,
-    };
-  }
-};
-
-export const updateQuiz = async (
-  quizId,
-  score,
-  dispatch,
-  navigate,
-  resultState,
-  questions
-) => {
-  dispatch({
-    type: "SET_STATUS",
-    payload: { status: { loading: "Updating Score..." } },
-  });
-  const response = await postUpdatedScore(quizId, score);
-  if (response === 204) {
-    dispatch({ type: "SET_STATUS", payload: { status: { loading: "" } } });
-    dispatch({
-      type: "UPDATE_SCORE",
-      payload: { quizId, score },
-    });
-    navigate("/result", {
-      state: {
-        resultState,
-        questions,
-        quizId,
-      },
-    });
-  }
-  dispatch({
-    type: "SET_STATUS",
-    payload: { status: { error: response } },
-  });
 };
 
 export const QuizComp = () => {
@@ -155,6 +34,15 @@ export const QuizComp = () => {
   const { theme } = useTheme();
   const { userDetailsState, userDetailsDispatch } = useUserDetail();
   const navigate = useNavigate();
+  // const totalUserScore = userDetailsState.solvedQuizzes.reduce((acc, value) => {
+  //   return acc + value.score;
+  // }, 0);
+  const knowledgeLevel =
+    userDetailsState.knowledgeLevel +
+    userDetailsState.solvedQuizzes.length +
+    1 * 5;
+  const coins = userDetailsState.coins + 5;
+  // const coins = userDetailsState.coins + getRandomIntInclusive(100, 200);
 
   useEffect(() => {
     let quizCounter;
@@ -254,14 +142,6 @@ export const QuizComp = () => {
             </button>
           </Link>
           {currentQuestionNo >= currentQuiz!.questions!.length - 1 ? (
-            // <Link
-            //   to='/result'
-            //   state={{
-            //     resultState,
-            //     questions: currentQuiz?.questions?.length,
-            //     quizId: currentQuiz?._id,
-            //   }}
-            // >
             <button
               onClick={() => {
                 const check = userDetailsState.solvedQuizzes.some(
@@ -274,7 +154,10 @@ export const QuizComp = () => {
                       userDetailsDispatch,
                       navigate,
                       resultState,
-                      currentQuiz?.questions?.length
+                      currentQuiz?.questions?.length,
+                      coins,
+                      calculateTotalUserScore(userDetailsState),
+                      knowledgeLevel
                     )
                   : sendSolvedQuizzes(
                       currentQuiz?._id,
@@ -282,7 +165,10 @@ export const QuizComp = () => {
                       userDetailsDispatch,
                       navigate,
                       resultState,
-                      currentQuiz?.questions?.length
+                      currentQuiz?.questions?.length,
+                      coins,
+                      calculateTotalUserScore(userDetailsState),
+                      knowledgeLevel
                     );
               }}
               className='btn'
@@ -291,7 +177,6 @@ export const QuizComp = () => {
               Stop
             </button>
           ) : (
-            // </Link>
             <button
               className='btn'
               style={{ boxShadow: theme.primaryBoxShadow }}

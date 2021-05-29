@@ -22,6 +22,20 @@ export const userDetailsReducer = (state: InitialUserDetailsState, action: UserD
                     state.solvedQuizzes.map((item) =>
                         item.quizId._id === action.payload.quizId ? { ...item, score: action.payload.score } : item)
             }
+        case "SET_USER_CREDITS":
+            return {
+                ...state,
+                knowledgeLevel: action.payload.knowledgeLevel,
+                totalScore: action.payload.totalScore,
+                coins: action.payload.coins,
+            };
+        case "UPDATE_USER_CREDITS":
+            return {
+                ...state,
+                knowledgeLevel: action.payload.knowledgeLevel,
+                totalScore: action.payload.totalScore,
+                coins: action.payload.coins,
+            };
         default:
             throw new Error();
     }
