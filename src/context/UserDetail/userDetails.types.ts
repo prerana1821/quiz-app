@@ -1,3 +1,4 @@
+import { Quiz } from "../../database"
 import { InitialUserDetailsState, UserDetailsAction } from "../../reducer/UserDetail/UserDetails.types"
 
 export type InitialUserDetailsContext = {
@@ -6,7 +7,7 @@ export type InitialUserDetailsContext = {
 }
 
 export type UserSolvedQuizzes = {
-    quizId: string,
+    quizId: Quiz,
     score: number
 }
 

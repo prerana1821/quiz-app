@@ -13,4 +13,5 @@ export type InitialUserDetailsState = {
 export type UserDetailsAction =
     | { type: "SET_USER_DETAILS"; payload: { data: UserDetails } }
     | { type: "SET_STATUS"; payload: { status: Status } }
+    | { type: "SET_SCORE"; payload: { solvedQuiz: UserSolvedQuizzes } }
 

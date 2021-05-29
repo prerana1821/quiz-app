@@ -1,4 +1,5 @@
 import axios from "axios";
+import { NavigateFunction } from "react-router";
 
 export const localStorageHasItem = (key: string): string | null => {
     return localStorage.getItem(key) !== null ? localStorage.getItem(key) : null;
@@ -37,4 +38,22 @@ export const setUpUser = (
         })
     );
     setupAuthHeaderForServiceCalls(token);
+};
+
+export const setupAuthExceptionHandler = (
+    logoutUser: () => void,
+    navigate: NavigateFunction
+): void => {
+    const UNAUTHORIZED = 401;
+    axios.interceptors.response.use(
+        (response) => response,
+        (error) => {
+            if (error?.response?.status === UNAUTHORIZED) {
+                logoutUser();
+                console.log("here");
+                navigate("login");
+            }
+            return Promise.reject(error);
+        }
+    );
 };

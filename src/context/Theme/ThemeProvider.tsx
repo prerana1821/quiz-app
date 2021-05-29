@@ -26,7 +26,6 @@ export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState<Theme>({} as Theme);
 
   const changeTheme = (selectedTheme: string) => {
-    console.log({ selectedTheme });
     if (selectedTheme === "lightTheme") {
       return setTheme(darkTheme);
     } else if (selectedTheme === "darkTheme") {

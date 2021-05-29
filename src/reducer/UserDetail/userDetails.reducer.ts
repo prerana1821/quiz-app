@@ -13,6 +13,8 @@ export const userDetailsReducer = (state: InitialUserDetailsState, action: UserD
             }
         case "SET_STATUS":
             return { ...state, status: action.payload.status }
+        case "SET_SCORE":
+            return { ...state, solvedQuizzes: state.solvedQuizzes.concat(action.payload.solvedQuiz) }
         default:
             throw new Error();
     }

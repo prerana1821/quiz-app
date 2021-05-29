@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
-import { NavigateFunction, useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import {
   LoginResponse,
   InitialAuthState,
@@ -8,29 +8,15 @@ import {
   SignupResponse,
 } from "./auth.types";
 import { ServerError, Status } from "./../utils.types";
-import { localStorageHasItem, setUpUser } from "./utils";
+import {
+  localStorageHasItem,
+  setupAuthExceptionHandler,
+  setUpUser,
+} from "./utils";
 
 export const AuthContext = createContext<InitialAuthState>(
   {} as InitialAuthState
 );
-
-export const setupAuthExceptionHandler = (
-  logoutUser: () => void,
-  navigate: NavigateFunction
-): void => {
-  const UNAUTHORIZED = 401;
-  axios.interceptors.response.use(
-    (response) => response,
-    (error) => {
-      if (error?.response?.status === UNAUTHORIZED) {
-        logoutUser();
-        console.log("here");
-        navigate("login");
-      }
-      return Promise.reject(error);
-    }
-  );
-};
 
 export const AuthProvider = ({ children }) => {
   const { state } = useLocation() as any;
@@ -57,7 +43,6 @@ export const AuthProvider = ({ children }) => {
       const userFromLocalStorageObj = JSON.parse(userFromLocalStorage);
       setUser(userFromLocalStorageObj);
     }
-
     setupAuthExceptionHandler(logout, navigate);
   }, []);
 
@@ -103,7 +88,12 @@ export const AuthProvider = ({ children }) => {
         }
       }
       console.log(error.response);
-      setStatus({ error: error.response.data.message } as Status);
+      setStatus({
+        error: {
+          errorMessage: "Something went wrong, Try Again!!",
+          errorCode: 403,
+        },
+      } as Status);
     }
   };
 
@@ -151,7 +141,12 @@ export const AuthProvider = ({ children }) => {
         }
       }
       console.log(error.response);
-      setStatus({ error: error.response.data.message } as Status);
+      setStatus({
+        error: {
+          errorMessage: "Something went wrong, Try Again!!",
+          errorCode: 403,
+        },
+      } as Status);
     }
   };
 
