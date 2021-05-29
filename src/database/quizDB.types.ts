@@ -11,7 +11,7 @@ export type Questions = {
 
 export type UserScore = {
     id: string;
-    userId: string;
+    userId: { username: string };
     score: number;
 }
 

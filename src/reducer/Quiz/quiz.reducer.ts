@@ -67,6 +67,36 @@ export const quizReducer = (
                 seconds: action.payload.seconds,
                 showAnswer: typeof action.payload.seconds === "string",
             };
+        case "SET_CURRENT_QUIZ_USER_SCORE":
+            return {
+                ...state,
+                currentQuiz:
+                    state.currentQuiz ?
+                        {
+                            ...state.currentQuiz,
+                            highScore: state.currentQuiz.highScore
+                                ? state.currentQuiz.highScore.concat({
+                                    score: action.payload.score, id: "",
+                                    userId: { username: action.payload.user.username }
+                                })
+                                : state.currentQuiz.highScore
+                        }
+                        : state.currentQuiz
+            };
+        case "UPDATE_CURRENT_QUIZ_USER_SCORE":
+            return {
+                ...state,
+                currentQuiz:
+                    state.currentQuiz ? {
+                        ...state.currentQuiz,
+                        highScore:
+                            state.currentQuiz.highScore
+                                ? state.currentQuiz.highScore.map((item) => {
+                                    return item.userId.username === action.payload.user.username
+                                        ? { ...item, score: action.payload.score } : item
+                                }) : state.currentQuiz.highScore
+                    } : state.currentQuiz
+            }
         case "QUIT_QUIZ":
             return initialQuizState;
         default:

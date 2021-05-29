@@ -1,0 +1,19 @@
+/* top-left border-radius */
+.quizscore tr:first-child th:first-child {
+  border-top-left-radius: 20px;
+}
+
+/* top-right border-radius */
+.quizscore tr:first-child th:last-child {
+  border-top-right-radius: 20px;
+}
+
+/* bottom-left border-radius */
+.quizscore tr:last-child td:first-child {
+  border-bottom-left-radius: 20px;
+}
+
+/* bottom-right border-radius */
+.quizscore tr:last-child td:last-child {
+  border-bottom-right-radius: 20px;
+}

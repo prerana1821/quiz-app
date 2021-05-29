@@ -27,5 +27,7 @@ export type QuizAction =
     | { type: "SET_SECONDS"; payload: { seconds: number | string } }
     | { type: "SEARCH_QUIZ"; payload: { searchString: string } }
     | { type: "FILTER_CATEGORY_QUIZZES"; payload: { category: Category } }
+    | { type: "SET_CURRENT_QUIZ_USER_SCORE"; payload: { user: { username: string }, score: number } }
+    | { type: "UPDATE_CURRENT_QUIZ_USER_SCORE"; payload: { user: { username: string }, score: number } }
     | { type: "CLEAR_CATEGORY_QUIZZES" }
     | { type: "QUIT_QUIZ" };

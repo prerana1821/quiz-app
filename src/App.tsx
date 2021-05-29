@@ -12,6 +12,7 @@ import {
   Login,
   Signup,
   Account,
+  QuizBoard,
 } from "./pages";
 import { MyActivity } from "./pages/MyActivity/MyActivity";
 
@@ -51,6 +52,10 @@ function App() {
             element={<MyActivity />}
           ></PrivateRoute>
           <PrivateRoute path='/result' element={<Result />}></PrivateRoute>
+          <PrivateRoute
+            path='/quiz-board/:quizId'
+            element={<QuizBoard />}
+          ></PrivateRoute>
         </Routes>
         {(status.success ||
           status.error?.errorMessage ||

@@ -6,3 +6,4 @@ export { Rules } from "./Rules/Rules";
 export { Login } from "./Login/Login";
 export { Signup } from "./Signup/Signup";
 export { Account } from "./Account/Account";
+export { QuizBoard } from "./QuizBoard/QuizBoard";

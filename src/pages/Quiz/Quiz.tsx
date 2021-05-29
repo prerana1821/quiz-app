@@ -1,12 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useQuiz, useTheme } from "../../context";
+import { useAuth, useQuiz, useTheme } from "../../context";
 import { useEffect, useReducer } from "react";
 import Loading from "./../../images/loading.svg";
 import { InitialResultState } from "../../reducer/Result/Result.types";
 import { resultReducer } from "../../reducer/Result/result.reducer";
 import { setResult } from "../../utils/utlis";
 import { useUserDetail } from "../../context/UserDetail/UserDetail";
-import { sendSolvedQuizzes, updateQuiz, getRandomIntInclusive } from "./utils";
+import { sendSolvedQuizzes, updateQuiz } from "./utils";
 import "./Quiz.css";
 
 export const calculateTotalUserScore = (userDetailsState) => {
@@ -43,6 +43,8 @@ export const QuizComp = () => {
     1 * 5;
   const coins = userDetailsState.coins + 5;
   // const coins = userDetailsState.coins + getRandomIntInclusive(100, 200);
+
+  const { user } = useAuth();
 
   useEffect(() => {
     let quizCounter;
@@ -157,7 +159,9 @@ export const QuizComp = () => {
                       currentQuiz?.questions?.length,
                       coins,
                       calculateTotalUserScore(userDetailsState),
-                      knowledgeLevel
+                      knowledgeLevel,
+                      quizDispatch,
+                      user.username
                     )
                   : sendSolvedQuizzes(
                       currentQuiz?._id,
@@ -168,7 +172,9 @@ export const QuizComp = () => {
                       currentQuiz?.questions?.length,
                       coins,
                       calculateTotalUserScore(userDetailsState),
-                      knowledgeLevel
+                      knowledgeLevel,
+                      quizDispatch,
+                      user.username
                     );
               }}
               className='btn'

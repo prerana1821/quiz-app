@@ -11,7 +11,7 @@ export const quizzesDB: Quiz[] = [
         highScore: [
             {
                 id: "2231",
-                userId: "2222",
+                userId: { username: "prerana" },
                 score: 20
             }
         ],
@@ -84,7 +84,7 @@ export const quizzesDB: Quiz[] = [
         highScore: [
             {
                 id: "2232",
-                userId: "2222",
+                userId: { username: "bhargav" },
                 score: 20
             }
         ],

@@ -32,6 +32,15 @@ export const Result = () => {
         <p>Right Answers: {state.resultState.rightAnswers}</p>
         <p>Wrong Answers: {state.resultState.wrongAnswers}</p>
       </div>
+      <Link to={`/quiz-board/${currentQuiz?._id}`}>
+        <button
+          onClick={() => quizDispatch({ type: "CLEAR_CATEGORY_QUIZZES" })}
+          style={{ boxShadow: theme.primaryBoxShadow }}
+          className='btn pink m-4'
+        >
+          View Quiz Board
+        </button>
+      </Link>
       <Link to='/quizzes'>
         <button
           onClick={() => quizDispatch({ type: "CLEAR_CATEGORY_QUIZZES" })}

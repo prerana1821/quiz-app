@@ -48,7 +48,9 @@ export const sendSolvedQuizzes = async (
     questions,
     coins,
     totalUserScore,
-    knowledgeLevel
+    knowledgeLevel,
+    quizDispatch,
+    username
 ) => {
     dispatch({
         type: "SET_STATUS",
@@ -58,7 +60,8 @@ export const sendSolvedQuizzes = async (
     if (quiz && "quizId" in quiz) {
         dispatch({ type: "SET_STATUS", payload: { status: { loading: "" } } });
         dispatch({ type: "SET_SCORE", payload: { solvedQuiz: quiz } });
-        dispatch({ type: "SET_USER_CREDITS", payload: { knowledgeLevel, totalScore: totalUserScore, coins } })
+        dispatch({ type: "SET_USER_CREDITS", payload: { knowledgeLevel, totalScore: totalUserScore, coins } });
+        quizDispatch({ type: "SET_CURRENT_QUIZ_USER_SCORE", payload: { user: { username: username }, score: score } });
         navigate("/result", {
             state: {
                 resultState,
@@ -121,7 +124,9 @@ export const updateQuiz = async (
     questions,
     coins,
     totalUserScore,
-    knowledgeLevel
+    knowledgeLevel,
+    quizDispatch,
+    username
 ) => {
     dispatch({
         type: "SET_STATUS",
@@ -134,7 +139,8 @@ export const updateQuiz = async (
             type: "UPDATE_SCORE",
             payload: { quizId, score },
         });
-        dispatch({ type: "UPDATE_USER_CREDITS", payload: { knowledgeLevel, totalScore: totalUserScore, coins } })
+        dispatch({ type: "UPDATE_USER_CREDITS", payload: { knowledgeLevel, totalScore: totalUserScore, coins } });
+        quizDispatch({ type: "UPDATE_CURRENT_QUIZ_USER_SCORE", payload: { user: { username: username }, score: score } });
         navigate("/result", {
             state: {
                 resultState,
