@@ -11,6 +11,7 @@ import { ServerError, Status } from "./../utils.types";
 import {
   localStorageHasItem,
   setupAuthExceptionHandler,
+  // setupAuthHeaderForServiceCalls,
   setUpUser,
 } from "./utils";
 
@@ -23,7 +24,9 @@ export const AuthProvider = ({ children }) => {
   let savedToken = localStorageHasItem("token");
   if (savedToken) {
     savedToken = JSON.parse(savedToken);
+    // setupAuthHeaderForServiceCalls(savedToken!);
   }
+  // console.log({ savedToken });
   const [token, setToken] = useState<string | null>(savedToken);
   const [user, setUser] = useState<User>({
     _id: "",

@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 import "./Toast.css";
 
-export const Toast = ({ statusSuccess, statusError, quizStatusError }) => {
+export const Toast = ({
+  statusSuccess,
+  statusError,
+  quizStatusError,
+  userDetailsSuccess,
+  userDetailsError,
+}) => {
   const [toastVisibility, setToastVisibility] = useState(true);
 
   useEffect(() => {
@@ -19,7 +25,13 @@ export const Toast = ({ statusSuccess, statusError, quizStatusError }) => {
         <div className='toast tl-error status'>
           <div className='tl-content-error'>
             <i className='fas fa-check-circle'></i>
-            <p>{statusSuccess || statusError || quizStatusError}</p>
+            <p>
+              {statusSuccess ||
+                statusError ||
+                quizStatusError ||
+                userDetailsSuccess ||
+                userDetailsError}
+            </p>
           </div>
         </div>
       )}

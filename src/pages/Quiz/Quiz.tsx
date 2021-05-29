@@ -1,7 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ServerError, useQuiz, useTheme } from "../../context";
 import { useEffect, useReducer } from "react";
 import "./Quiz.css";
+import Loading from "./../../images/loading.svg";
 import { InitialResultState } from "../../reducer/Result/Result.types";
 import { resultReducer } from "../../reducer/Result/result.reducer";
 import { setResult } from "../../utils/utlis";
@@ -46,7 +47,14 @@ export const postSolvedQuizzes = async (
   }
 };
 
-const sendSolvedQuizzes = async (quizId, score, dispatch) => {
+const sendSolvedQuizzes = async (
+  quizId,
+  score,
+  dispatch,
+  navigate,
+  resultState,
+  questions
+) => {
   dispatch({
     type: "SET_STATUS",
     payload: { status: { loading: "Adding Score..." } },
@@ -54,7 +62,14 @@ const sendSolvedQuizzes = async (quizId, score, dispatch) => {
   const quiz = await postSolvedQuizzes(quizId, score);
   if (quiz && "quizId" in quiz) {
     dispatch({ type: "SET_STATUS", payload: { status: { loading: "" } } });
-    return dispatch({ type: "SET_SCORE", payload: { solvedQuiz: quiz } });
+    dispatch({ type: "SET_SCORE", payload: { solvedQuiz: quiz } });
+    navigate("/result", {
+      state: {
+        resultState,
+        questions,
+        quizId,
+      },
+    });
   }
   dispatch({
     type: "SET_STATUS",
@@ -94,7 +109,14 @@ export const postUpdatedScore = async (
   }
 };
 
-export const updateQuiz = async (quizId, score, dispatch) => {
+export const updateQuiz = async (
+  quizId,
+  score,
+  dispatch,
+  navigate,
+  resultState,
+  questions
+) => {
   dispatch({
     type: "SET_STATUS",
     payload: { status: { loading: "Updating Score..." } },
@@ -102,9 +124,16 @@ export const updateQuiz = async (quizId, score, dispatch) => {
   const response = await postUpdatedScore(quizId, score);
   if (response === 204) {
     dispatch({ type: "SET_STATUS", payload: { status: { loading: "" } } });
-    return dispatch({
+    dispatch({
       type: "UPDATE_SCORE",
       payload: { quizId, score },
+    });
+    navigate("/result", {
+      state: {
+        resultState,
+        questions,
+        quizId,
+      },
     });
   }
   dispatch({
@@ -125,6 +154,7 @@ export const QuizComp = () => {
 
   const { theme } = useTheme();
   const { userDetailsState, userDetailsDispatch } = useUserDetail();
+  const navigate = useNavigate();
 
   useEffect(() => {
     let quizCounter;
@@ -156,6 +186,9 @@ export const QuizComp = () => {
   return (
     <div>
       <div className='p-6 flex flex-col justify-between height md:w-7/12 md:m-auto'>
+        {userDetailsState.status.loading && (
+          <img className='loading' src={Loading} alt='Loading' />
+        )}
         <div>
           <h2 className='text-xl'>Timer: {seconds}</h2>
           <p className='text-2xl'>
@@ -221,34 +254,44 @@ export const QuizComp = () => {
             </button>
           </Link>
           {currentQuestionNo >= currentQuiz!.questions!.length - 1 ? (
-            <Link
-              to='/result'
-              state={{
-                resultState,
-                questions: currentQuiz?.questions?.length,
-                quizId: currentQuiz?._id,
+            // <Link
+            //   to='/result'
+            //   state={{
+            //     resultState,
+            //     questions: currentQuiz?.questions?.length,
+            //     quizId: currentQuiz?._id,
+            //   }}
+            // >
+            <button
+              onClick={() => {
+                const check = userDetailsState.solvedQuizzes.some(
+                  (item) => item.quizId._id === currentQuiz?._id
+                );
+                check
+                  ? updateQuiz(
+                      currentQuiz?._id,
+                      score,
+                      userDetailsDispatch,
+                      navigate,
+                      resultState,
+                      currentQuiz?.questions?.length
+                    )
+                  : sendSolvedQuizzes(
+                      currentQuiz?._id,
+                      score,
+                      userDetailsDispatch,
+                      navigate,
+                      resultState,
+                      currentQuiz?.questions?.length
+                    );
               }}
+              className='btn'
+              style={{ boxShadow: theme.primaryBoxShadow }}
             >
-              <button
-                onClick={() => {
-                  const check = userDetailsState.solvedQuizzes.some(
-                    (item) => item.quizId._id === currentQuiz?._id
-                  );
-                  check
-                    ? updateQuiz(currentQuiz?._id, score, userDetailsDispatch)
-                    : sendSolvedQuizzes(
-                        currentQuiz?._id,
-                        score,
-                        userDetailsDispatch
-                      );
-                }}
-                className='btn'
-                style={{ boxShadow: theme.primaryBoxShadow }}
-              >
-                Stop
-              </button>
-            </Link>
+              Stop
+            </button>
           ) : (
+            // </Link>
             <button
               className='btn'
               style={{ boxShadow: theme.primaryBoxShadow }}

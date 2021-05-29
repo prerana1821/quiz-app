@@ -8,7 +8,9 @@ export const localStorageHasItem = (key: string): string | null => {
 export const setupAuthHeaderForServiceCalls = (
     token: string
 ): string | undefined => {
+    // console.log(token);
     if (token) {
+        // console.log('works');
         return (axios.defaults.headers.common["Authorization"] = token);
     }
     delete axios.defaults.headers.common["Authorization"];

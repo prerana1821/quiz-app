@@ -1,7 +1,8 @@
+import axios from "axios";
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { Header, PrivateRoute, Toast } from "./components";
-import { useAuth, useQuiz, useTheme } from "./context";
+import { useAuth, useQuiz, useTheme, useUserDetail } from "./context";
 import {
   Home,
   Quizes,
@@ -18,6 +19,14 @@ function App() {
   const { theme } = useTheme();
   const { status } = useAuth();
   const { status: quizStatus } = useQuiz();
+  const { userDetailsState } = useUserDetail();
+  // console.log("plzz");
+
+  // axios.defaults.headers.common["Authorization"] = JSON.parse(
+  //   localStorage.getItem("token")!
+  // );
+
+  // console.log(axios.defaults.headers.common["Authorization"]);
 
   return (
     <div className='App' style={theme}>
@@ -45,11 +54,15 @@ function App() {
         </Routes>
         {(status.success ||
           status.error?.errorMessage ||
-          quizStatus.error?.errorMessage) && (
+          quizStatus.error?.errorMessage ||
+          userDetailsState.status.loading ||
+          userDetailsState.status.error) && (
           <Toast
             statusSuccess={status.success}
             quizStatusError={quizStatus.error?.errorMessage}
             statusError={status.error?.errorMessage}
+            userDetailsSuccess={userDetailsState.status.success}
+            userDetailsError={userDetailsState.status.error?.errorMessage}
           />
         )}
       </div>

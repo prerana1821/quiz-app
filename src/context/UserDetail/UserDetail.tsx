@@ -45,8 +45,11 @@ export const getUserDetails = async (): Promise<UserDetails | ServerError> => {
 export const UserDetailProvider = ({ children }) => {
   const { token } = useAuth();
 
+  // console.log(token);
+
   useEffect(() => {
     if (token) {
+      // console.log("Hello");
       (async () => {
         userDetailsDispatch({
           type: "SET_STATUS",
@@ -77,6 +80,7 @@ export const UserDetailProvider = ({ children }) => {
   );
 
   console.log({ userDetailsState });
+  console.log(userDetailsState.status);
 
   return (
     <UserDetailContext.Provider
