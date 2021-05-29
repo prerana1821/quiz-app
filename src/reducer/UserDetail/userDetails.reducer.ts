@@ -15,6 +15,13 @@ export const userDetailsReducer = (state: InitialUserDetailsState, action: UserD
             return { ...state, status: action.payload.status }
         case "SET_SCORE":
             return { ...state, solvedQuizzes: state.solvedQuizzes.concat(action.payload.solvedQuiz) }
+        case "UPDATE_SCORE":
+            return {
+                ...state,
+                solvedQuizzes:
+                    state.solvedQuizzes.map((item) =>
+                        item.quizId._id === action.payload.quizId ? { ...item, score: action.payload.score } : item)
+            }
         default:
             throw new Error();
     }

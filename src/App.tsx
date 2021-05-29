@@ -1,3 +1,4 @@
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { Header, PrivateRoute, Toast } from "./components";
 import { useAuth, useQuiz, useTheme } from "./context";
@@ -11,6 +12,7 @@ import {
   Signup,
   Account,
 } from "./pages";
+import { MyActivity } from "./pages/MyActivity/MyActivity";
 
 function App() {
   const { theme } = useTheme();
@@ -34,6 +36,10 @@ function App() {
           <PrivateRoute
             path='/quizzes/:quizId'
             element={<QuizComp />}
+          ></PrivateRoute>
+          <PrivateRoute
+            path='/my-activity'
+            element={<MyActivity />}
           ></PrivateRoute>
           <PrivateRoute path='/result' element={<Result />}></PrivateRoute>
         </Routes>

@@ -61,6 +61,58 @@ const sendSolvedQuizzes = async (quizId, score, dispatch) => {
     payload: { status: { error: quiz } },
   });
 };
+
+export const postUpdatedScore = async (
+  quizId: string,
+  score: number
+): Promise<number | ServerError> => {
+  try {
+    console.log({ quizId });
+    const response = await axios.post(
+      `https://api-quizzel.prerananawar1.repl.co/user-details/solved-quizzes/${quizId}`,
+      {
+        score,
+      }
+    );
+    console.log({ response });
+    return response.status;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const serverError = error as AxiosError<ServerError>;
+      if (serverError && serverError.response) {
+        return {
+          errorMessage: serverError.response.data.errorMessage,
+          errorCode: serverError.response.status,
+        };
+      }
+    }
+    console.log(error);
+    return {
+      errorMessage: "Something went wrong, Try Again!!",
+      errorCode: 403,
+    };
+  }
+};
+
+export const updateQuiz = async (quizId, score, dispatch) => {
+  dispatch({
+    type: "SET_STATUS",
+    payload: { status: { loading: "Updating Score..." } },
+  });
+  const response = await postUpdatedScore(quizId, score);
+  if (response === 204) {
+    dispatch({ type: "SET_STATUS", payload: { status: { loading: "" } } });
+    return dispatch({
+      type: "UPDATE_SCORE",
+      payload: { quizId, score },
+    });
+  }
+  dispatch({
+    type: "SET_STATUS",
+    payload: { status: { error: response } },
+  });
+};
+
 export const QuizComp = () => {
   const {
     score,
@@ -72,7 +124,7 @@ export const QuizComp = () => {
   } = useQuiz();
 
   const { theme } = useTheme();
-  const { userDetailsDispatch } = useUserDetail();
+  const { userDetailsState, userDetailsDispatch } = useUserDetail();
 
   useEffect(() => {
     let quizCounter;
@@ -178,13 +230,18 @@ export const QuizComp = () => {
               }}
             >
               <button
-                onClick={() =>
-                  sendSolvedQuizzes(
-                    currentQuiz?._id,
-                    score,
-                    userDetailsDispatch
-                  )
-                }
+                onClick={() => {
+                  const check = userDetailsState.solvedQuizzes.some(
+                    (item) => item.quizId._id === currentQuiz?._id
+                  );
+                  check
+                    ? updateQuiz(currentQuiz?._id, score, userDetailsDispatch)
+                    : sendSolvedQuizzes(
+                        currentQuiz?._id,
+                        score,
+                        userDetailsDispatch
+                      );
+                }}
                 className='btn'
                 style={{ boxShadow: theme.primaryBoxShadow }}
               >
