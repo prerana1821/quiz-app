@@ -2,15 +2,17 @@ import axios from "axios";
 import { NavigateFunction } from "react-router";
 
 export const localStorageHasItem = (key: string): string | null => {
-    return localStorage.getItem(key) !== null ? localStorage.getItem(key) : null;
+    const savedToken = localStorage.getItem(key);
+    const { token } = savedToken !== null ? JSON.parse(savedToken) : { token: null };
+    return token;
 };
 
 export const setupAuthHeaderForServiceCalls = (
     token: string
 ): string | undefined => {
-    // console.log(token);
+    console.log(token);
     if (token) {
-        // console.log('works');
+        console.log('works');
         return (axios.defaults.headers.common["Authorization"] = token);
     }
     delete axios.defaults.headers.common["Authorization"];

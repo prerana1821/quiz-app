@@ -11,7 +11,7 @@ import { ServerError, Status } from "./../utils.types";
 import {
   localStorageHasItem,
   setupAuthExceptionHandler,
-  // setupAuthHeaderForServiceCalls,
+  setupAuthHeaderForServiceCalls,
   setUpUser,
 } from "./utils";
 
@@ -23,10 +23,8 @@ export const AuthProvider = ({ children }) => {
   const { state } = useLocation() as any;
   let savedToken = localStorageHasItem("token");
   if (savedToken) {
-    savedToken = JSON.parse(savedToken);
-    // setupAuthHeaderForServiceCalls(savedToken!);
+    setupAuthHeaderForServiceCalls(savedToken);
   }
-  // console.log({ savedToken });
   const [token, setToken] = useState<string | null>(savedToken);
   const [user, setUser] = useState<User>({
     _id: "",
@@ -41,7 +39,7 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const userFromLocalStorage = localStorageHasItem("user");
+    const userFromLocalStorage = localStorage.getItem("user");
     if (userFromLocalStorage) {
       const userFromLocalStorageObj = JSON.parse(userFromLocalStorage);
       setUser(userFromLocalStorageObj);

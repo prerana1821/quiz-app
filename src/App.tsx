@@ -21,13 +21,6 @@ function App() {
   const { status } = useAuth();
   const { status: quizStatus } = useQuiz();
   const { userDetailsState } = useUserDetail();
-  // console.log("plzz");
-
-  // axios.defaults.headers.common["Authorization"] = JSON.parse(
-  //   localStorage.getItem("token")!
-  // );
-
-  // console.log(axios.defaults.headers.common["Authorization"]);
 
   return (
     <div className='App' style={theme}>
