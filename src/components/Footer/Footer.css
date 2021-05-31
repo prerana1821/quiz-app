@@ -1,0 +1,36 @@
+.main-footer {
+  display: flex;
+  justify-content: space-around;
+  padding: 2rem 1rem 2rem;
+  border-radius: 1rem 1rem 0 0;
+  margin: 4rem 0 0;
+}
+
+.footer-list {
+  display: flex;
+  gap: 1rem;
+}
+/* 
+.footer-list > li > a {
+  color: #000;
+} */
+
+.footer-list > li > a {
+  color: var(--dk-pink);
+}
+
+.pink-txt {
+  color: var(--dk-pink);
+}
+
+.pink-txt:hover {
+  text-decoration: underline;
+}
+
+@media only screen and (max-width: 768px) {
+  .main-footer {
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+  }
+}
